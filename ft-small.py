@@ -105,6 +105,20 @@ def _limit_dataset(dataset, max_examples):
     return dataset.select(range(min(max_examples, len(dataset))))
 
 
+def _ensure_empty_output_dir(output_dir):
+    if not os.path.exists(output_dir):
+        return
+    if not os.path.isdir(output_dir):
+        raise RuntimeError(
+            f"Output path exists and is not a directory: {os.path.abspath(output_dir)}"
+        )
+    if os.listdir(output_dir):
+        raise RuntimeError(
+            "Output directory is not empty. "
+            f"Refusing to run: {os.path.abspath(output_dir)}"
+        )
+
+
 def _load_tokenizer(tokenizer_name):
     attempts = [
         {
@@ -253,6 +267,7 @@ resolved_params = {
 }
 
 resolved_params["ft_push_to_hub"] = args.push_to_hub
+_ensure_empty_output_dir(resolved_params["ft_output_dir"])
 
 print(f"Config values from {params_path}:")
 for key in sorted(resolved_params.keys()):
