@@ -6,6 +6,7 @@ __pycache__/
 venv/
 env/
 .env
+.vscode/
 
 .ipynb_checkpoints/
 .pytest_cache/
@@ -16,5 +17,6 @@ wandb/
 
 ministral-8b-instruct-lora/
 ministral-8b-instruct-merged/
+Ministral-8B-Instruct-2410
 
 *.log

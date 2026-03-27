@@ -12,7 +12,7 @@ La configuration d'entraînement est dans `params-small.cfg`.
 
 ## Pré-requis
 
-- Python 3
+- Python 3.13.12 recommandé
 - accès GPU recommandé pour l'entraînement
 - un compte Hugging Face avec accès au modèle `Ministral-8B-Instruct-2410`
 - un compte Weights & Biases si tu gardes le reporting W&B activé
@@ -26,6 +26,23 @@ Bibliothèques Python attendues par les scripts :
 - `trl`
 - `wandb`
 - `huggingface_hub`
+
+Le dépôt inclut un `requirements.txt` avec un jeu de versions récent et conservateur pour le ML, prévu pour Python 3.13.
+
+## Environnement local
+
+Convention recommandée pour ce dépôt : environnement virtuel dans `.venv/`.
+
+Création et activation :
+
+```bash
+python3.13 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Le répertoire `.venv/` est ignoré par git.
 
 ## Variables d'environnement
 
@@ -90,10 +107,12 @@ python3 query-small.py \
 
 ```text
 .
+├── .python-version
 ├── ft-small.py
 ├── merge-small.py
-├── query-small.py
 ├── params-small.cfg
+├── query-small.py
+├── requirements.txt
 └── Makefile
 ```
 
