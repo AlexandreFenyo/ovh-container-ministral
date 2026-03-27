@@ -1,7 +1,6 @@
-
+import argparse
 import os
 import shlex
-import wandb
 from huggingface_hub import login
 from datasets import load_dataset
 import transformers
@@ -57,17 +56,98 @@ def _get_param(params, key, alias=None, default=None, required=True):
     return default
 
 
+def _wants_wandb(report_to):
+    if report_to is None:
+        return False
+    if isinstance(report_to, str):
+        values = [report_to]
+    else:
+        values = report_to
+    normalized = {str(value).strip().lower() for value in values}
+    return "wandb" in normalized
+
+
+def _require_env(name, help_text):
+    value = os.environ.get(name)
+    if value:
+        return value
+    raise RuntimeError(f"Missing environment variable {name!r}. {help_text}")
+
+
+def _get_env(name):
+    value = os.environ.get(name)
+    if value:
+        return value
+    return None
+
+
+def _parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--max-examples",
+        type=int,
+        default=None,
+        help="Limit train and validation datasets to the first N examples for quick tests.",
+    )
+    parser.add_argument(
+        "--push-to-hub",
+        action="store_true",
+        help="Enable Hub uploads for the current run. By default, uploads are disabled.",
+    )
+    return parser.parse_args()
+
+
+def _limit_dataset(dataset, max_examples):
+    if max_examples is None:
+        return dataset
+    if max_examples <= 0:
+        raise ValueError("--max-examples must be a positive integer")
+    return dataset.select(range(min(max_examples, len(dataset))))
+
+
 def _load_tokenizer(tokenizer_name):
-    kwargs = {"use_fast": True}
-    if int(transformers.__version__.split(".", 1)[0]) < 5:
-        kwargs["fix_mistral_regex"] = True
-    try:
-        return AutoTokenizer.from_pretrained(tokenizer_name, **kwargs)
-    except TypeError as exc:
-        if "fix_mistral_regex" not in str(exc):
-            raise
-        kwargs.pop("fix_mistral_regex", None)
-        return AutoTokenizer.from_pretrained(tokenizer_name, **kwargs)
+    attempts = [
+        {
+            "kwargs": {"use_fast": True, "fix_mistral_regex": True},
+            "reason": "preferred tokenizer load with mistral regex fix",
+        },
+        {
+            "kwargs": {"use_fast": True, "fix_mistral_regex": False},
+            "reason": "fallback when the local tokenizers API is incompatible with the mistral regex patch",
+        },
+        {
+            "kwargs": {"use_fast": False},
+            "reason": "last-resort tokenizer load without fast-tokenizer features",
+        },
+    ]
+
+    errors = []
+    for attempt in attempts:
+        try:
+            if errors:
+                print(
+                    f"Retrying tokenizer load for {tokenizer_name!r}: {attempt['reason']}."
+                )
+            return AutoTokenizer.from_pretrained(tokenizer_name, **attempt["kwargs"])
+        except Exception as exc:
+            errors.append((attempt["kwargs"], exc))
+            message = str(exc)
+            can_retry = False
+            if (
+                attempt["kwargs"].get("fix_mistral_regex") is True
+                and "backend_tokenizer" in message
+            ):
+                can_retry = True
+            elif "fix_mistral_regex" in message:
+                can_retry = True
+
+            if not can_retry:
+                raise
+
+    attempted = ", ".join(str(kwargs) for kwargs, _ in errors)
+    raise RuntimeError(
+        f"Unable to load tokenizer {tokenizer_name!r} after trying: {attempted}"
+    ) from errors[-1][1]
 
 
 def _fold_system_into_user(example):
@@ -94,6 +174,8 @@ def _fold_system_into_user(example):
     example["messages"] = [merged_user] + messages[2:]
     return example
 
+
+args = _parse_args()
 
 params_path = os.environ.get("PARAMS_CFG", "params-small.cfg")
 if not os.path.isabs(params_path):
@@ -170,6 +252,8 @@ resolved_params = {
     "ft_eval_steps": _get_param(params, "ft_eval_steps"),
 }
 
+resolved_params["ft_push_to_hub"] = args.push_to_hub
+
 print(f"Config values from {params_path}:")
 for key in sorted(resolved_params.keys()):
     print(f"  {key}={resolved_params[key]}")
@@ -188,9 +272,23 @@ model_kwargs = dict(
 )
 
 os.environ['WANDB_NOTEBOOK_NAME'] = wandb_notebook_name
-wandb.login(key=os.environ['wandbkey'])
-login(token=os.environ['hfkey'])
-wandb.init(project=var_wandb_project, entity="alexandre-fenyo-fenyonet", name=var_wandb_run)
+hf_token = _get_env("hfkey")
+if hf_token:
+    login(token=hf_token)
+else:
+    print("hfkey is not set; relying on local Hugging Face access and cached credentials.")
+
+if _wants_wandb(resolved_params["ft_report_to"]):
+    try:
+        import wandb
+    except ModuleNotFoundError as exc:
+        raise ModuleNotFoundError(
+            "Weights & Biases reporting is enabled but the 'wandb' package is not installed. "
+            "Install it with '.venv/bin/python -m pip install wandb' or disable W&B by setting "
+            "ft_report_to=\"none\" in the params file."
+        ) from exc
+    wandb.login(key=_require_env("wandbkey", "Export your Weights & Biases token or disable W&B with ft_report_to=\"none\"."))
+    wandb.init(project=var_wandb_project, entity="alexandre-fenyo-fenyonet", name=var_wandb_run)
 
 # Chargement du tokenizer
 tokenizer = _load_tokenizer(tokenizer_name)
@@ -206,10 +304,14 @@ train_dataset = load_dataset(var_dataset_name, split="train")
 # Conserve uniquement la colonne "messages" (ou adapte selon ton schéma)
 train_dataset = train_dataset.remove_columns([c for c in train_dataset.column_names if c != "messages"])
 train_dataset = train_dataset.map(_fold_system_into_user)
+train_dataset = _limit_dataset(train_dataset, args.max_examples)
 
 eval_dataset = load_dataset(var_dataset_name, split="validation")
 eval_dataset = eval_dataset.remove_columns([c for c in eval_dataset.column_names if c != "messages"])
 eval_dataset = eval_dataset.map(_fold_system_into_user)
+eval_dataset = _limit_dataset(eval_dataset, args.max_examples)
+
+print(f"Dataset sizes: train={len(train_dataset)} validation={len(eval_dataset)}")
 
 peft_config = LoraConfig(
     task_type=TaskType.CAUSAL_LM,
