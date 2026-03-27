@@ -119,6 +119,134 @@ def _ensure_empty_output_dir(output_dir):
         )
 
 
+def _ensure_assistant_generation_template(tokenizer, assistant_only_loss):
+    if not assistant_only_loss:
+        return
+
+    chat_template = getattr(tokenizer, "chat_template", None)
+    if not chat_template:
+        raise RuntimeError(
+            "assistant_only_loss=True requires a tokenizer chat template, but none is configured."
+        )
+    if "{% generation %}" in chat_template:
+        return
+
+    assistant_block = '{{- message["content"] + eos_token}}'
+    if assistant_block not in chat_template:
+        raise RuntimeError(
+            "assistant_only_loss=True requires assistant generation markers, and the chat template "
+            "does not contain the expected assistant block to patch automatically."
+        )
+
+    tokenizer.chat_template = chat_template.replace(
+        assistant_block,
+        '{% generation %}{{- message["content"] + eos_token}}{% endgeneration %}',
+        1,
+    )
+    print(
+        "Patched tokenizer chat template with generation markers so assistant_only_loss can be enabled."
+    )
+
+
+def _visible_text(text):
+    return (
+        text.replace("\r", "<CR>")
+        .replace("\t", "<TAB>")
+        .replace("\n", "<EOL>\n")
+    )
+
+
+def _masked_visible_text(text, char_mask):
+    masked_chars = []
+    for ch, keep in zip(text, char_mask):
+        if keep:
+            masked_chars.append(ch)
+        elif ch == "\n":
+            masked_chars.append("\n")
+        elif ch == "\t":
+            masked_chars.append("\t")
+        else:
+            masked_chars.append(".")
+    return _visible_text("".join(masked_chars))
+
+
+def _preview_training_example(dataset, tokenizer, assistant_only_loss):
+    if len(dataset) == 0:
+        raise RuntimeError("Training dataset is empty.")
+
+    example = dataset[0]
+    messages = example["messages"]
+    rendered = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=False,
+    )
+    tokenized = tokenizer.apply_chat_template(
+        messages,
+        tokenize=True,
+        return_dict=True,
+        add_generation_prompt=False,
+        return_assistant_tokens_mask=assistant_only_loss,
+    )
+
+    input_ids = tokenized["input_ids"]
+    assistant_mask = tokenized.get("assistant_masks")
+    if assistant_mask is None:
+        assistant_mask = [1] * len(input_ids)
+
+    tokenized_with_offsets = tokenizer(
+        rendered,
+        add_special_tokens=False,
+        return_offsets_mapping=True,
+    )
+    offset_ids = tokenized_with_offsets["input_ids"]
+    offsets = tokenized_with_offsets["offset_mapping"]
+    if input_ids != offset_ids:
+        raise RuntimeError(
+            "Preview tokenization mismatch between chat template rendering and tokenizer offsets."
+        )
+
+    char_mask = [False] * len(rendered)
+    for keep, (start, end) in zip(assistant_mask, offsets):
+        if keep:
+            for idx in range(start, end):
+                char_mask[idx] = True
+
+    trainable_text = "".join(
+        ch for ch, keep in zip(rendered, char_mask) if keep
+    )
+
+    print("\n=== First Training Example Preview ===")
+    print(f"Messages in example: {len(messages)}")
+    print(f"Rendered characters: {len(rendered)}")
+    print(f"Rendered tokens: {len(input_ids)}")
+    print(f"Trainable tokens: {sum(assistant_mask)}")
+    print(
+        "\nView 1: Full model input."
+        " This is the exact text produced by the chat template and sent to the model."
+        " It should include control tokens such as <s>, [INST], [/INST], the user prompt,"
+        " and the assistant answer."
+    )
+    print("\nRendered chat template:")
+    print(_visible_text(rendered))
+    print(
+        "\nView 2: Same model input after applying the loss mask."
+        " Visible characters are the ones whose tokens contribute to the training loss."
+        " Dots mark text that is still provided to the model as context but should not be optimized,"
+        " such as [INST], the prompt, and other prompt-side control tokens."
+    )
+    print("\nRendered chat template after loss mask:")
+    print(_masked_visible_text(rendered, char_mask))
+    print(
+        "\nView 3: Trainable text only."
+        " This is the assistant-side text extracted from the masked view."
+        " It should contain only what we want the fine-tuning objective to learn to predict."
+    )
+    print("\nTrainable text only:")
+    print(_visible_text(trainable_text))
+    print("=== End Preview ===\n")
+
+
 def _load_tokenizer(tokenizer_name):
     attempts = [
         {
@@ -309,6 +437,9 @@ if _wants_wandb(resolved_params["ft_report_to"]):
 tokenizer = _load_tokenizer(tokenizer_name)
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
+_ensure_assistant_generation_template(
+    tokenizer, resolved_params["ft_assistant_only_loss"]
+)
 
 # Chargement du modèle
 model = AutoModelForCausalLM.from_pretrained(model_name, **model_kwargs)
@@ -327,6 +458,9 @@ eval_dataset = eval_dataset.map(_fold_system_into_user)
 eval_dataset = _limit_dataset(eval_dataset, args.max_examples)
 
 print(f"Dataset sizes: train={len(train_dataset)} validation={len(eval_dataset)}")
+_preview_training_example(
+    train_dataset, tokenizer, resolved_params["ft_assistant_only_loss"]
+)
 
 peft_config = LoraConfig(
     task_type=TaskType.CAUSAL_LM,
