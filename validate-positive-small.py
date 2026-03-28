@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import shlex
+import sys
 import unicodedata
 
 import requests
@@ -16,6 +17,12 @@ DEFAULT_JUDGE_ENDPOINT = (
     "https://gpt-oss-120b.endpoints.kepler.ai.cloud.ovh.net/api/openai_compat/v1"
 )
 DEFAULT_JUDGE_SYSTEM = "Tu es un assistant utile qui repond de facon concise."
+
+
+def _enable_line_buffering():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(line_buffering=True)
+        sys.stderr.reconfigure(line_buffering=True)
 
 
 def _coerce_value(raw):
@@ -283,6 +290,8 @@ def _call_judge(endpoint, model, token, question, reference, generated, temperat
 
 
 def main():
+    _enable_line_buffering()
+
     parser = argparse.ArgumentParser(
         description=(
             "Valide le finetuning sur les exemples positifs en utilisant un juge OVH gpt-oss:120b."
@@ -418,12 +427,12 @@ def main():
     model.eval()
 
     print(f"Dataset: {dataset_name}")
-    print(f"Selected split: {split_name}")
-    print(f"Positive examples: {len(positive_dataset)} / {len(dataset_split)}")
-    print(f"Judge: {args.judge_model} @ {args.judge_endpoint}")
-    print("Adapters under test:")
+    print(f"Selected split: {split_name}", flush=True)
+    print(f"Positive examples: {len(positive_dataset)} / {len(dataset_split)}", flush=True)
+    print(f"Judge: {args.judge_model} @ {args.judge_endpoint}", flush=True)
+    print("Adapters under test:", flush=True)
     for label, path in variants:
-        print(f"- {label}: {path}")
+        print(f"- {label}: {path}", flush=True)
 
     summary = {}
     for label, _ in variants:
@@ -450,7 +459,7 @@ def main():
                 temperature=args.judge_temperature,
             )
             scores.append(score)
-            print(f"{prefix} -> {score:.3f}")
+            print(f"{prefix} -> {score:.3f}", flush=True)
             if score < 1.0:
                 failures.append(
                     {
@@ -468,20 +477,21 @@ def main():
             "failures": failures,
         }
 
-    print()
+    print(flush=True)
     for label, data in summary.items():
-        print(f"== {label} ==")
-        print(f"Average score: {data['average_score']:.3f}")
+        print(f"== {label} ==", flush=True)
+        print(f"Average score: {data['average_score']:.3f}", flush=True)
         if data["failures"]:
-            print("Non-perfect scores:")
+            print("Non-perfect scores:", flush=True)
             for failure in data["failures"][:5]:
                 print(
                     f"- {failure['index'] + 1}/{data['total']} score={failure['score']:.3f}"
-                    f" | {failure['question']}"
+                    f" | {failure['question']}",
+                    flush=True,
                 )
         else:
-            print("All positive examples received a score of 1.0.")
-        print()
+            print("All positive examples received a score of 1.0.", flush=True)
+        print(flush=True)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import argparse
 import os
 import shlex
+import sys
 import unicodedata
 
 import torch
@@ -224,7 +225,15 @@ def _format_result_line(index, total, question, expected, got, ok):
     )
 
 
+def _enable_line_buffering():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(line_buffering=True)
+        sys.stderr.reconfigure(line_buffering=True)
+
+
 def main():
+    _enable_line_buffering()
+
     parser = argparse.ArgumentParser(
         description=(
             "Valide le finetuning en comparant les reponses generees par chaque checkpoint "
@@ -340,14 +349,14 @@ def main():
     model.config.pad_token_id = tokenizer.pad_token_id
     model.eval()
 
-    print(f"Dataset: {dataset_name}")
-    print(f"Selected split: {split_name}")
-    print(f"Negative examples: {len(negative_dataset)} / {len(dataset_split)}")
+    print(f"Dataset: {dataset_name}", flush=True)
+    print(f"Selected split: {split_name}", flush=True)
+    print(f"Negative examples: {len(negative_dataset)} / {len(dataset_split)}", flush=True)
     if system_prompt:
-        print("System prompt loaded from params file.")
-    print("Adapters under test:")
+        print("System prompt loaded from params file.", flush=True)
+    print("Adapters under test:", flush=True)
     for label, path in variants:
-        print(f"- {label}: {path}")
+        print(f"- {label}: {path}", flush=True)
 
     results = {}
     for label, _ in variants:
@@ -367,7 +376,7 @@ def main():
             )
 
             ok = _normalize_text(generated) == _normalize_text(expected)
-            print(f"{prefix} -> {'OK' if ok else 'FAIL'}")
+            print(f"{prefix} -> {'OK' if ok else 'FAIL'}", flush=True)
             if ok:
                 correct += 1
             else:
@@ -386,15 +395,15 @@ def main():
             "failures": failures,
         }
 
-    print()
+    print(flush=True)
     for label, summary in results.items():
         correct = summary["correct"]
         total = summary["total"]
         accuracy = correct / total if total else 0.0
-        print(f"== {label} ==")
-        print(f"Accuracy: {correct}/{total} ({accuracy:.2%})")
+        print(f"== {label} ==", flush=True)
+        print(f"Accuracy: {correct}/{total} ({accuracy:.2%})", flush=True)
         if summary["failures"]:
-            print("First mismatches:")
+            print("First mismatches:", flush=True)
             for failure in summary["failures"][:5]:
                 print(
                     _format_result_line(
@@ -404,11 +413,12 @@ def main():
                         failure["expected"],
                         failure["got"],
                         False,
-                    )
+                    ),
+                    flush=True,
                 )
         else:
-            print("All negative examples matched the expected response.")
-        print()
+            print("All negative examples matched the expected response.", flush=True)
+        print(flush=True)
 
 
 if __name__ == "__main__":
