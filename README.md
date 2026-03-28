@@ -8,6 +8,7 @@ Le dépôt contient quatre scripts principaux :
 - `merge-small.py` : fusionne le modèle base et l'adaptateur LoRA
 - `query-small.py` : teste l'inférence sur l'adaptateur ou sur le modèle fusionné
 - `validate-small.py` : vérifie les réponses attendues sur les exemples `negative`
+- `validate-positive-small.py` : juge les réponses sur les exemples `positive` avec OVH
 
 La configuration d'entraînement est dans `params-small.cfg`.
 
@@ -54,6 +55,7 @@ Les scripts d'entraînement utilisent :
 - `hfkey` : token Hugging Face
 - `wandbkey` : token Weights & Biases
 - `PARAMS_CFG` : chemin optionnel vers un autre fichier de configuration
+- `OVH_AI_TOKEN` : token pour le juge OVH utilisé par `validate-positive-small.py`
 
 Exemple :
 
@@ -124,6 +126,24 @@ python3 validate-small.py --split validation --max-negative-examples 2
 
 Sans `--split`, les splits disponibles sont affichés puis le script demande lequel analyser.
 
+## Validation positive avec juge OVH
+
+Le validateur positif charge les exemples `positive`, génère une réponse pour chaque checkpoint et le modèle final, puis demande à un juge OVH `gpt-oss-120b` de scorer la réponse.
+
+Avec un split explicite :
+
+```bash
+python3 validate-positive-small.py --split validation
+```
+
+Pour tester rapidement sur seulement deux lignes positives :
+
+```bash
+python3 validate-positive-small.py --split validation --max-positive-examples 2
+```
+
+Sans `--split`, les splits disponibles sont affichés puis le script demande lequel analyser.
+
 ## Structure
 
 ```text
@@ -131,11 +151,29 @@ Sans `--split`, les splits disponibles sont affichés puis le script demande leq
 ├── .python-version
 ├── ft-small.py
 ├── merge-small.py
+├── validate-positive-small.py
 ├── validate-small.py
 ├── params-small.cfg
 ├── query-small.py
 └── requirements.txt
 ```
+
+## Ajouter le message système en dur dans le chat template, après le merge
+Modifier `ministral-8b-instruct-merged/chat_template.jinja` en supprimant :
+```jinja2
+{%- if messages[0]["role"] == "system" %}
+    {%- set system_message = messages[0]["content"] %}
+    {%- set loop_messages = messages[1:] %}
+{%- else %}
+    {%- set loop_messages = messages %}
+{%- endif %}
+```
+Et en le remplaçant par :
+```jinja2
+{%- set system_message = "You are a helpful chatbot assistant for the Mon Espace Santé website. You answer only based on the information present in the FAQ. If the information is not available, you must respond with the predefined refusal message and nothing else." %}
+{%- set loop_messages = messages %}
+```
+
 
 ## Transformer en GGUF pour Ollama et l'importer dans Ollama
 
@@ -147,10 +185,13 @@ Utiliser un autre répertoire et un autre env, en clonant llama.cpp et en mettan
 % cd ../ovh-container-ministral/ministral-8b-instruct-merged/
 % sed -i 's/"tokenizer_class": "TokenizersBackend"/"tokenizer_class": "PreTrainedTokenizerFast"/' tokenizer_config.json
 % cd -
+% rm -rf ../ovh-container-ministral/ministral-8b-instruct-merged.gguf
 % python convert_hf_to_gguf.py ../ovh-container-ministral/ministral-8b-instruct-merged --outfile ../ovh-container-ministral/ministral-8b-instruct-merged.gguf --outtype f16
 INFO:hf-to-gguf:Model successfully exported to ../ovh-container-ministral/ministral-8b-instruct-merged.gguf
+NOTE : PASSER SOUS cygwin ici
 % cat Modelfile.ollama
 FROM ministral-8b-instruct-merged.gguf
+% ollama rm ministral-merged
 % ollama create ministral-merged -f Modelfile.ollama
 ```
 
