@@ -2,11 +2,12 @@
 
 Pipeline minimal de fine-tuning LoRA pour `Ministral-8B-Instruct-2410`, centré sur une FAQ Mon Espace Santé.
 
-Le dépôt contient trois scripts principaux :
+Le dépôt contient quatre scripts principaux :
 
 - `ft-small.py` : entraîne un adaptateur LoRA avec TRL `SFTTrainer`
 - `merge-small.py` : fusionne le modèle base et l'adaptateur LoRA
 - `query-small.py` : teste l'inférence sur l'adaptateur ou sur le modèle fusionné
+- `validate-small.py` : vérifie les réponses attendues sur les exemples `negative`
 
 La configuration d'entraînement est dans `params-small.cfg`.
 
@@ -105,6 +106,24 @@ python3 query-small.py \
   --user-prompt "Comment activer Mon espace sante ?"
 ```
 
+## Validation du finetuning
+
+Le validateur charge le dataset, filtre les exemples `negative`, puis compare les réponses générées par chaque checkpoint et par le modèle final à la réponse attendue.
+
+Avec un split explicite :
+
+```bash
+python3 validate-small.py --split validation
+```
+
+Pour tester rapidement sur seulement deux lignes négatives :
+
+```bash
+python3 validate-small.py --split validation --max-negative-examples 2
+```
+
+Sans `--split`, les splits disponibles sont affichés puis le script demande lequel analyser.
+
 ## Structure
 
 ```text
@@ -112,10 +131,10 @@ python3 query-small.py \
 ├── .python-version
 ├── ft-small.py
 ├── merge-small.py
+├── validate-small.py
 ├── params-small.cfg
 ├── query-small.py
-├── requirements.txt
-└── Makefile
+└── requirements.txt
 ```
 
 ## Transformer en GGUF pour Ollama et l'importer dans Ollama
@@ -137,6 +156,5 @@ FROM ministral-8b-instruct-merged.gguf
 
 ## Notes
 
-- `Makefile` contient encore un workflow Docker/OVH partiel, distinct des scripts Python présents dans ce dépôt.
 - Le champ `system_prompt` de `params-small.cfg` est informatif ; le comportement appris dépend du contenu réel du dataset.
 - Les répertoires de sortie `ministral-8b-instruct-lora/` et `ministral-8b-instruct-merged/` sont ignorés par git.
