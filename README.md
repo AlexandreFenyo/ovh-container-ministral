@@ -116,6 +116,23 @@ python3 query-small.py \
 └── Makefile
 ```
 
+## Transformer en GGUF pour Ollama et l'importer dans Ollama
+
+Utiliser un autre répertoire et un autre env, en clonant llama.cpp et en mettant à jour le tokenizer du modèle comme ceci :
+```bash
+% cd git
+% cd llama.cpp
+% source .venv/bin/activate
+% cd ../ovh-container-ministral/ministral-8b-instruct-merged/
+% sed -i 's/"tokenizer_class": "TokenizersBackend"/"tokenizer_class": "PreTrainedTokenizerFast"/' tokenizer_config.json
+% cd -
+% python convert_hf_to_gguf.py ../ovh-container-ministral/ministral-8b-instruct-merged --outfile ../ovh-container-ministral/ministral-8b-instruct-merged.gguf --outtype f16
+INFO:hf-to-gguf:Model successfully exported to ../ovh-container-ministral/ministral-8b-instruct-merged.gguf
+% cat Modelfile.ollama
+FROM ministral-8b-instruct-merged.gguf
+% ollama create ministral-merged -f Modelfile.ollama
+```
+
 ## Notes
 
 - `Makefile` contient encore un workflow Docker/OVH partiel, distinct des scripts Python présents dans ce dépôt.
