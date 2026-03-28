@@ -1,6 +1,7 @@
 import argparse
 import os
 import shlex
+from contextlib import nullcontext
 import sys
 import unicodedata
 
@@ -354,40 +355,49 @@ def main():
     print(f"Negative examples: {len(negative_dataset)} / {len(dataset_split)}", flush=True)
     if system_prompt:
         print("System prompt loaded from params file.", flush=True)
-    print("Adapters under test:", flush=True)
-    for label, path in variants:
-        print(f"- {label}: {path}", flush=True)
+    test_variants = [("base", None)] + variants
+    print("Models under test:", flush=True)
+    for label, path in test_variants:
+        if path is None:
+            print(f"- {label}: base model without LoRA adapter", flush=True)
+        else:
+            print(f"- {label}: {path}", flush=True)
 
     results = {}
-    for label, _ in variants:
-        if hasattr(model, "set_adapter"):
-            model.set_adapter(label)
+    for label, path in test_variants:
+        if label == "base":
+            context = model.disable_adapter() if hasattr(model, "disable_adapter") else nullcontext()
+        else:
+            if hasattr(model, "set_adapter"):
+                model.set_adapter(label)
+            context = nullcontext()
 
         correct = 0
         failures = []
         total = len(negative_dataset)
-        for idx, row in enumerate(negative_dataset):
-            prefix = f"[split={split_name}][checkpoint={label}] {idx + 1}/{total}"
-            messages = row.get("messages") or []
-            prompt_messages = _build_prompt(messages)
-            expected = row["assistant"]
-            generated = _generate_response(
-                model, tokenizer, prompt_messages, args.max_new_tokens
-            )
-
-            ok = _normalize_text(generated) == _normalize_text(expected)
-            print(f"{prefix} -> {'OK' if ok else 'FAIL'}", flush=True)
-            if ok:
-                correct += 1
-            else:
-                failures.append(
-                    {
-                        "index": idx,
-                        "question": row["user"],
-                        "expected": expected,
-                        "got": generated,
-                    }
+        with context:
+            for idx, row in enumerate(negative_dataset):
+                prefix = f"[split={split_name}][checkpoint={label}] {idx + 1}/{total}"
+                messages = row.get("messages") or []
+                prompt_messages = _build_prompt(messages)
+                expected = row["assistant"]
+                generated = _generate_response(
+                    model, tokenizer, prompt_messages, args.max_new_tokens
                 )
+
+                ok = _normalize_text(generated) == _normalize_text(expected)
+                print(f"{prefix} -> {'OK' if ok else 'FAIL'}", flush=True)
+                if ok:
+                    correct += 1
+                else:
+                    failures.append(
+                        {
+                            "index": idx,
+                            "question": row["user"],
+                            "expected": expected,
+                            "got": generated,
+                        }
+                    )
 
         results[label] = {
             "correct": correct,
