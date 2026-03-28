@@ -17,6 +17,8 @@ La configuration d'entraînement est dans `params-small.cfg`.
 - un compte Hugging Face avec accès au modèle `Ministral-8B-Instruct-2410`
 - un compte Weights & Biases si tu gardes le reporting W&B activé
 
+Variables d'environnement avec les jetons d'API : `source /mnt/e/AI_experiments/env.sh`
+
 Bibliothèques Python attendues par les scripts :
 
 - `torch`
