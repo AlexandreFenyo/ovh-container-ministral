@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import shlex
+from contextlib import nullcontext
 import sys
 import unicodedata
 
@@ -430,45 +431,54 @@ def main():
     print(f"Selected split: {split_name}", flush=True)
     print(f"Positive examples: {len(positive_dataset)} / {len(dataset_split)}", flush=True)
     print(f"Judge: {args.judge_model} @ {args.judge_endpoint}", flush=True)
-    print("Adapters under test:", flush=True)
-    for label, path in variants:
-        print(f"- {label}: {path}", flush=True)
+    print("Models under test:", flush=True)
+    test_variants = [("base", None)] + variants
+    for label, path in test_variants:
+        if path is None:
+            print(f"- {label}: base model without LoRA adapter", flush=True)
+        else:
+            print(f"- {label}: {path}", flush=True)
 
     summary = {}
-    for label, _ in variants:
-        if hasattr(model, "set_adapter"):
-            model.set_adapter(label)
+    for label, path in test_variants:
+        if label == "base":
+            context = model.disable_adapter() if hasattr(model, "disable_adapter") else nullcontext()
+        else:
+            if hasattr(model, "set_adapter"):
+                model.set_adapter(label)
+            context = nullcontext()
 
         scores = []
         failures = []
         total = len(positive_dataset)
 
-        for idx, row in enumerate(positive_dataset):
-            prefix = f"[split={split_name}][checkpoint={label}] {idx + 1}/{total}"
-            prompt_messages = _build_prompt(row.get("messages") or [])
-            generated = _generate_response(
-                model, tokenizer, prompt_messages, args.max_new_tokens
-            )
-            score, _reason = _call_judge(
-                endpoint=args.judge_endpoint,
-                model=args.judge_model,
-                token=token,
-                question=row["user"],
-                reference=row["assistant"],
-                generated=generated,
-                temperature=args.judge_temperature,
-            )
-            scores.append(score)
-            print(f"{prefix} -> {score:.3f}", flush=True)
-            if score < 1.0:
-                failures.append(
-                    {
-                        "index": idx,
-                        "question": row["user"],
-                        "score": score,
-                        "reason": _reason,
-                    }
+        with context:
+            for idx, row in enumerate(positive_dataset):
+                prefix = f"[split={split_name}][checkpoint={label}] {idx + 1}/{total}"
+                prompt_messages = _build_prompt(row.get("messages") or [])
+                generated = _generate_response(
+                    model, tokenizer, prompt_messages, args.max_new_tokens
                 )
+                score, _reason = _call_judge(
+                    endpoint=args.judge_endpoint,
+                    model=args.judge_model,
+                    token=token,
+                    question=row["user"],
+                    reference=row["assistant"],
+                    generated=generated,
+                    temperature=args.judge_temperature,
+                )
+                scores.append(score)
+                print(f"{prefix} -> {score:.3f}", flush=True)
+                if score < 1.0:
+                    failures.append(
+                        {
+                            "index": idx,
+                            "question": row["user"],
+                            "score": score,
+                            "reason": _reason,
+                        }
+                    )
 
         average_score = sum(scores) / len(scores) if scores else 0.0
         summary[label] = {
