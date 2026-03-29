@@ -4,7 +4,9 @@ import shlex
 from contextlib import nullcontext
 import sys
 import unicodedata
+import time
 
+import requests
 import torch
 from datasets import load_dataset
 from peft import PeftModel
@@ -100,6 +102,27 @@ def _load_tokenizer(tokenizer_name):
     ) from errors[-1][1]
 
 
+def _retry_with_backoff(action, description, max_retries=5, initial_delay=2.0):
+    last_error = None
+    for attempt in range(1, max_retries + 1):
+        try:
+            return action()
+        except (requests.RequestException, OSError, RuntimeError, ConnectionError, TimeoutError) as exc:
+            last_error = exc
+            if attempt < max_retries:
+                delay = initial_delay * (2 ** (attempt - 1))
+                print(
+                    f"[warn] {description} failed on attempt {attempt}/{max_retries}: {exc}"
+                    f" | retrying in {delay:.1f}s",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                time.sleep(delay)
+                continue
+
+    raise RuntimeError(f"{description} failed after {max_retries} attempts") from last_error
+
+
 def _discover_variants(adapter_root):
     variants = []
     if not os.path.isdir(adapter_root):
@@ -173,7 +196,10 @@ def _generate_response(model, tokenizer, messages, max_new_tokens):
 
 
 def _load_base_model(base_model_name, model_kwargs):
-    return AutoModelForCausalLM.from_pretrained(base_model_name, **model_kwargs)
+    return _retry_with_backoff(
+        lambda: AutoModelForCausalLM.from_pretrained(base_model_name, **model_kwargs),
+        f"Loading base model {base_model_name!r}",
+    )
 
 
 def _load_model_bundle(base_model_name, adapter_root, model_kwargs):
@@ -184,19 +210,30 @@ def _load_model_bundle(base_model_name, adapter_root, model_kwargs):
         return base_model, variants
 
     first_label, first_path = adapter_variants[0]
-    model = PeftModel.from_pretrained(
-        base_model,
-        first_path,
-        adapter_name=first_label,
-        is_trainable=False,
+    model = _retry_with_backoff(
+        lambda: PeftModel.from_pretrained(
+            base_model,
+            first_path,
+            adapter_name=first_label,
+            is_trainable=False,
+        ),
+        f"Loading adapter {first_label!r} from {first_path!r}",
     )
     for label, path in adapter_variants[1:]:
-        model.load_adapter(path, adapter_name=label, is_trainable=False)
+        _retry_with_backoff(
+            lambda path=path, label=label: model.load_adapter(
+                path, adapter_name=label, is_trainable=False
+            ),
+            f"Loading adapter {label!r} from {path!r}",
+        )
     return model, variants
 
 
 def _select_split(dataset_name, requested_split):
-    dataset_dict = load_dataset(dataset_name)
+    dataset_dict = _retry_with_backoff(
+        lambda: load_dataset(dataset_name),
+        f"Loading dataset {dataset_name!r}",
+    )
     available_splits = list(dataset_dict.keys())
 
     if requested_split:
@@ -329,7 +366,10 @@ def main():
     if len(negative_dataset) == 0:
         raise RuntimeError(f"No negative examples found in split {split_name!r}.")
 
-    tokenizer = _load_tokenizer(tokenizer_name)
+    tokenizer = _retry_with_backoff(
+        lambda: _load_tokenizer(tokenizer_name),
+        f"Loading tokenizer {tokenizer_name!r}",
+    )
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 

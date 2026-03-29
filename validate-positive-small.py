@@ -5,6 +5,7 @@ import shlex
 from contextlib import nullcontext
 import sys
 import unicodedata
+import time
 
 import requests
 import torch
@@ -248,6 +249,20 @@ def _pick_token():
 
 
 def _call_judge(endpoint, model, token, question, reference, generated, temperature):
+    return _call_judge_with_retries(
+        endpoint=endpoint,
+        model=model,
+        token=token,
+        question=question,
+        reference=reference,
+        generated=generated,
+        temperature=temperature,
+        max_retries=5,
+        initial_retry_delay=2.0,
+    )
+
+
+def _call_judge_once(endpoint, model, token, question, reference, generated, temperature):
     url = endpoint.rstrip("/") + "/chat/completions"
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     user_prompt = (
@@ -288,6 +303,51 @@ def _call_judge(endpoint, model, token, question, reference, generated, temperat
     score = float(judge["score"])
     reason = str(judge.get("reason", "")).strip()
     return score, reason
+
+
+def _call_judge_with_retries(
+    endpoint,
+    model,
+    token,
+    question,
+    reference,
+    generated,
+    temperature,
+    max_retries,
+    initial_retry_delay,
+):
+    last_error = None
+    for attempt in range(1, max_retries + 1):
+        try:
+            return _call_judge_once(
+                endpoint=endpoint,
+                model=model,
+                token=token,
+                question=question,
+                reference=reference,
+                generated=generated,
+                temperature=temperature,
+            )
+        except (requests.RequestException, RuntimeError, ValueError, json.JSONDecodeError) as exc:
+            last_error = exc
+            if attempt < max_retries:
+                delay = initial_retry_delay * (2 ** (attempt - 1))
+                print(
+                    f"[warn] Judge call failed on attempt {attempt}/{max_retries}: {exc}"
+                    f" | retrying in {delay:.1f}s",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                time.sleep(delay)
+                continue
+
+    print(
+        f"[warn] Judge call failed after {max_retries} attempts: {last_error};"
+        " continuing with score=0.000",
+        file=sys.stderr,
+        flush=True,
+    )
+    return 0.0, "judge unavailable after retries"
 
 
 def main():
