@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1400" viewBox="0 0 1800 1400">
+<rect x="0" y="0" width="1800" height="1400" rx="0" fill="#070b16" stroke="none" stroke-width="1" opacity="1.0"/>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0b1020"/><stop offset="100%" stop-color="#090d1a"/></linearGradient></defs>
+<rect x="0" y="0" width="1800" height="1400" rx="0" fill="url(#bg)" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="36" y="48" font-size="30" font-weight="800" fill="#f8fafc" text-anchor="start" opacity="1.0">Comparaison visuelle du fine-tuning</text>
+<text x="36" y="76" font-size="14" font-weight="400" fill="#94a3b8" text-anchor="start" opacity="1.0">Le meilleur refus arrive tôt, la meilleure réponse positive arrive plus tard: un vrai compromis entre robustesse et complétude.</text>
+<rect x="24" y="96" width="410" height="90" rx="18" fill="#10182f" stroke="#253046" stroke-width="1.2" opacity="1.0"/>
+<rect x="38" y="110" width="10" height="62" rx="5" fill="#64748b" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="60" y="126" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Base</text>
+<text x="60" y="154" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">Positif 0.077 | Négatif 0.00%</text>
+<rect x="454" y="96" width="410" height="90" rx="18" fill="#10182f" stroke="#253046" stroke-width="1.2" opacity="1.0"/>
+<rect x="468" y="110" width="10" height="62" rx="5" fill="#2563eb" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="490" y="126" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Meilleur négatif</text>
+<text x="490" y="154" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-250 | 96.77%</text>
+<rect x="884" y="96" width="410" height="90" rx="18" fill="#10182f" stroke="#253046" stroke-width="1.2" opacity="1.0"/>
+<rect x="898" y="110" width="10" height="62" rx="5" fill="#f59e0b" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="920" y="126" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Meilleur positif</text>
+<text x="920" y="154" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-875 | 0.892</text>
+<rect x="1314" y="96" width="410" height="90" rx="18" fill="#10182f" stroke="#253046" stroke-width="1.2" opacity="1.0"/>
+<rect x="1328" y="110" width="10" height="62" rx="5" fill="#16a34a" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="1350" y="126" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Compromis final</text>
+<text x="1350" y="154" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">final | 0.863 / 90.32%</text>
+<rect x="24" y="200" width="850" height="440" rx="22" fill="#0f172a" stroke="#253046" stroke-width="1.4" opacity="1.0"/>
+<text x="48" y="232" font-size="21" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Score positif moyen</text>
+<text x="48" y="250" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="start" opacity="0.95">Juge OVH gpt-oss:120b sur les exemples positive</text>
+<line x1="80" y1="596" x2="854" y2="596" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="70" y="600" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.000</text>
+<line x1="80" y1="510.5" x2="854" y2="510.5" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="70" y="514.5" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.250</text>
+<line x1="80" y1="425.0" x2="854" y2="425.0" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="70" y="429.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.500</text>
+<line x1="80" y1="339.5" x2="854" y2="339.5" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="70" y="343.5" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.750</text>
+<line x1="80" y1="254.0" x2="854" y2="254.0" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="70" y="258.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">1.000</text>
+<text x="80.0" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">base</text>
+<circle cx="80.0" cy="569.666" r="4.5" fill="#475569" stroke="#ffffff" stroke-width="2"/>
+<text x="150.36363636363637" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-125</text>
+<circle cx="150.36363636363637" cy="372.674" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="220.72727272727272" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-250</text>
+<circle cx="220.72727272727272" cy="332.318" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="291.09090909090907" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-375</text>
+<circle cx="291.09090909090907" cy="300.854" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="361.45454545454544" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-500</text>
+<circle cx="361.45454545454544" cy="303.59000000000003" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="431.8181818181818" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-625</text>
+<circle cx="431.8181818181818" cy="292.304" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="502.18181818181813" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-750</text>
+<circle cx="502.18181818181813" cy="297.434" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="572.5454545454545" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-875</text>
+<circle cx="572.5454545454545" cy="290.936" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="642.9090909090909" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-1000</text>
+<circle cx="642.9090909090909" cy="299.828" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="713.2727272727274" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-1125</text>
+<circle cx="713.2727272727274" cy="300.17" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="783.6363636363636" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-1250</text>
+<circle cx="783.6363636363636" cy="300.854" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="854.0" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">final</text>
+<circle cx="854.0" cy="300.854" r="4.5" fill="#0f766e" stroke="#ffffff" stroke-width="2"/>
+<line x1="80.0" y1="569.666" x2="150.36363636363637" y2="372.674" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="150.36363636363637" y1="372.674" x2="220.72727272727272" y2="332.318" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="220.72727272727272" y1="332.318" x2="291.09090909090907" y2="300.854" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="291.09090909090907" y1="300.854" x2="361.45454545454544" y2="303.59000000000003" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="361.45454545454544" y1="303.59000000000003" x2="431.8181818181818" y2="292.304" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="431.8181818181818" y1="292.304" x2="502.18181818181813" y2="297.434" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="502.18181818181813" y1="297.434" x2="572.5454545454545" y2="290.936" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="572.5454545454545" y1="290.936" x2="642.9090909090909" y2="299.828" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="642.9090909090909" y1="299.828" x2="713.2727272727274" y2="300.17" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="713.2727272727274" y1="300.17" x2="783.6363636363636" y2="300.854" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="783.6363636363636" y1="300.854" x2="854.0" y2="300.854" stroke="#0f766e" stroke-width="3.5" opacity="1.0"/>
+<rect x="912" y="200" width="850" height="440" rx="22" fill="#0f172a" stroke="#253046" stroke-width="1.4" opacity="1.0"/>
+<text x="936" y="232" font-size="21" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Exactitude négative</text>
+<text x="936" y="250" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="start" opacity="0.95">Exact-match des exemples negative</text>
+<line x1="968" y1="596" x2="1742" y2="596" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="958" y="600" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.00%</text>
+<line x1="968" y1="510.5" x2="1742" y2="510.5" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="958" y="514.5" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">25.00%</text>
+<line x1="968" y1="425.0" x2="1742" y2="425.0" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="958" y="429.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">50.00%</text>
+<line x1="968" y1="339.5" x2="1742" y2="339.5" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="958" y="343.5" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">75.00%</text>
+<line x1="968" y1="254.0" x2="1742" y2="254.0" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="958" y="258.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">100.00%</text>
+<text x="968.0" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">base</text>
+<circle cx="968.0" cy="596.0" r="4.5" fill="#475569" stroke="#ffffff" stroke-width="2"/>
+<text x="1038.3636363636363" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-125</text>
+<circle cx="1038.3636363636363" cy="436.0466" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1108.7272727272727" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-250</text>
+<circle cx="1108.7272727272727" cy="265.0466" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1179.090909090909" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-375</text>
+<circle cx="1179.090909090909" cy="281.5652" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1249.4545454545455" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-500</text>
+<circle cx="1249.4545454545455" cy="276.059" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1319.8181818181818" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-625</text>
+<circle cx="1319.8181818181818" cy="298.118" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1390.181818181818" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-750</text>
+<circle cx="1390.181818181818" cy="276.059" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1460.5454545454545" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-875</text>
+<circle cx="1460.5454545454545" cy="287.10560000000004" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1530.909090909091" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-1000</text>
+<circle cx="1530.909090909091" cy="281.5652" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1601.2727272727275" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-1125</text>
+<circle cx="1601.2727272727275" cy="287.10560000000004" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1671.6363636363635" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-1250</text>
+<circle cx="1671.6363636363635" cy="287.10560000000004" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<text x="1742.0" y="618" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">final</text>
+<circle cx="1742.0" cy="287.10560000000004" r="4.5" fill="#0f766e" stroke="#ffffff" stroke-width="2"/>
+<line x1="968.0" y1="596.0" x2="1038.3636363636363" y2="436.0466" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1038.3636363636363" y1="436.0466" x2="1108.7272727272727" y2="265.0466" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1108.7272727272727" y1="265.0466" x2="1179.090909090909" y2="281.5652" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1179.090909090909" y1="281.5652" x2="1249.4545454545455" y2="276.059" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1249.4545454545455" y1="276.059" x2="1319.8181818181818" y2="298.118" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1319.8181818181818" y1="298.118" x2="1390.181818181818" y2="276.059" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1390.181818181818" y1="276.059" x2="1460.5454545454545" y2="287.10560000000004" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1460.5454545454545" y1="287.10560000000004" x2="1530.909090909091" y2="281.5652" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1530.909090909091" y1="281.5652" x2="1601.2727272727275" y2="287.10560000000004" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1601.2727272727275" y1="287.10560000000004" x2="1671.6363636363635" y2="287.10560000000004" stroke="#f59e0b" stroke-width="3.5" opacity="1.0"/>
+<line x1="1671.6363636363635" y1="287.10560000000004" x2="1742.0" y2="287.10560000000004" stroke="#0f766e" stroke-width="3.5" opacity="1.0"/>
+<line x1="80.0" y1="569.666" x2="220" y2="690" stroke="#94a3b8" stroke-width="2" opacity="1.0" stroke-dasharray="6 6"/>
+<rect x="44" y="692" width="280" height="76" rx="14" fill="#10182f" stroke="#334155" stroke-width="1.2" opacity="0.98"/>
+<text x="58" y="718" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Base</text>
+<text x="58" y="741" font-size="12" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.077 positif, 0.00% négatif</text>
+<line x1="572.5454545454545" y1="290.936" x2="360" y2="690" stroke="#f59e0b" stroke-width="2" opacity="1.0" stroke-dasharray="6 6"/>
+<rect x="366" y="692" width="280" height="76" rx="14" fill="#1a1520" stroke="#334155" stroke-width="1.2" opacity="0.98"/>
+<text x="380" y="718" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Pic positif</text>
+<text x="380" y="741" font-size="12" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-875 atteint 0.892</text>
+<line x1="854.0" y1="300.854" x2="680" y2="690" stroke="#16a34a" stroke-width="2" opacity="1.0" stroke-dasharray="6 6"/>
+<rect x="690" y="692" width="280" height="76" rx="14" fill="#10201a" stroke="#334155" stroke-width="1.2" opacity="0.98"/>
+<text x="704" y="718" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Final</text>
+<text x="704" y="741" font-size="12" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.863 positif, 90.32% négatif</text>
+<line x1="968.0" y1="596.0" x2="1110" y2="690" stroke="#94a3b8" stroke-width="2" opacity="1.0" stroke-dasharray="6 6"/>
+<rect x="936" y="692" width="280" height="76" rx="14" fill="#10182f" stroke="#334155" stroke-width="1.2" opacity="0.98"/>
+<text x="950" y="718" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Base</text>
+<text x="950" y="741" font-size="12" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.00% seulement sur les négatifs</text>
+<line x1="1108.7272727272727" y1="265.0466" x2="1338" y2="690" stroke="#2563eb" stroke-width="2" opacity="1.0" stroke-dasharray="6 6"/>
+<rect x="1344" y="692" width="280" height="76" rx="14" fill="#101b2f" stroke="#334155" stroke-width="1.2" opacity="0.98"/>
+<text x="1358" y="718" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Pic négatif</text>
+<text x="1358" y="741" font-size="12" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-250 atteint 96.77%</text>
+<line x1="1742.0" y1="287.10560000000004" x2="1590" y2="690" stroke="#16a34a" stroke-width="2" opacity="1.0" stroke-dasharray="6 6"/>
+<rect x="1590" y="692" width="280" height="76" rx="14" fill="#10201a" stroke="#334155" stroke-width="1.2" opacity="0.98"/>
+<text x="1604" y="718" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Final</text>
+<text x="1604" y="741" font-size="12" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">90.32% au final</text>
+<rect x="24" y="730" width="1752" height="270" rx="22" fill="#0f172a" stroke="#253046" stroke-width="1.4" opacity="1.0"/>
+<text x="48" y="766" font-size="22" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Ce que disent les graphes train/eval</text>
+<text x="48" y="790" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="start" opacity="1.0">La courbe eval/loss baisse puis remonte légèrement: le meilleur point métier n'est pas forcément le dernier.</text>
+<rect x="48" y="820" width="392" height="132" rx="18" fill="#111a31" stroke="#24324f" stroke-width="1.1" opacity="1.0"/>
+<rect x="62" y="838" width="8" height="96" rx="4" fill="#f59e0b" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="82" y="858" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Eval/loss</text>
+<text x="82" y="886" font-size="14" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">Minimum vers 625-750 steps</text>
+<text x="82" y="912" font-size="12" font-weight="400" fill="#fcd34d" text-anchor="start" opacity="1.0">Surapprentissage léger après le creux</text>
+<rect x="472" y="820" width="392" height="132" rx="18" fill="#111a31" stroke="#24324f" stroke-width="1.1" opacity="1.0"/>
+<rect x="486" y="838" width="8" height="96" rx="4" fill="#2563eb" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="506" y="858" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Train/loss</text>
+<text x="506" y="886" font-size="14" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">Chute rapide vers ~0</text>
+<text x="506" y="912" font-size="12" font-weight="400" fill="#93c5fd" text-anchor="start" opacity="1.0">Le modèle apprend très vite</text>
+<rect x="896" y="820" width="392" height="132" rx="18" fill="#111a31" stroke="#24324f" stroke-width="1.1" opacity="1.0"/>
+<rect x="910" y="838" width="8" height="96" rx="4" fill="#16a34a" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="930" y="858" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Train/acc</text>
+<text x="930" y="886" font-size="14" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">Plateau proche de 0.99</text>
+<text x="930" y="912" font-size="12" font-weight="400" fill="#86efac" text-anchor="start" opacity="1.0">Capacité d'ajustement élevée</text>
+<rect x="1320" y="820" width="392" height="132" rx="18" fill="#111a31" stroke="#24324f" stroke-width="1.1" opacity="1.0"/>
+<rect x="1334" y="838" width="8" height="96" rx="4" fill="#0ea5e9" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="1354" y="858" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Eval/acc</text>
+<text x="1354" y="886" font-size="14" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">Stabilisé autour de 0.965</text>
+<text x="1354" y="912" font-size="12" font-weight="400" fill="#67e8f9" text-anchor="start" opacity="1.0">Généralisation correcte mais pas parfaite</text>
+<rect x="24" y="1030" width="1752" height="320" rx="22" fill="#0f172a" stroke="#253046" stroke-width="1.4" opacity="1.0"/>
+<text x="48" y="1066" font-size="22" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Carte de compromis des versions</text>
+<text x="48" y="1090" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="start" opacity="1.0">Axe X = score positif moyen, Axe Y = exactitude négative. Le coin haut-droite est l'objectif.</text>
+<line x1="88" y1="1138" x2="88" y2="1322" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<line x1="88" y1="1322" x2="1708" y2="1322" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="88" y="1344" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="middle" opacity="1.0">0.00</text>
+<text x="78" y="1326" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0%</text>
+<line x1="493.0" y1="1138" x2="493.0" y2="1322" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<line x1="88" y1="1276.0" x2="1708" y2="1276.0" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="493.0" y="1344" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="middle" opacity="1.0">0.25</text>
+<text x="78" y="1280.0" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">25%</text>
+<line x1="898.0" y1="1138" x2="898.0" y2="1322" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<line x1="88" y1="1230.0" x2="1708" y2="1230.0" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="898.0" y="1344" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="middle" opacity="1.0">0.50</text>
+<text x="78" y="1234.0" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">50%</text>
+<line x1="1303.0" y1="1138" x2="1303.0" y2="1322" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<line x1="88" y1="1184.0" x2="1708" y2="1184.0" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="1303.0" y="1344" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="middle" opacity="1.0">0.75</text>
+<text x="78" y="1188.0" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">75%</text>
+<line x1="1708.0" y1="1138" x2="1708.0" y2="1322" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<line x1="88" y1="1138.0" x2="1708" y2="1138.0" stroke="#23304f" stroke-width="1" opacity="1.0"/>
+<text x="1708.0" y="1344" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="middle" opacity="1.0">1.00</text>
+<text x="78" y="1142.0" font-size="11" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">100%</text>
+<line x1="88" y1="1322" x2="1708" y2="1322" stroke="#e2e8f0" stroke-width="1.2" opacity="1.0"/>
+<line x1="88" y1="1138" x2="88" y2="1322" stroke="#e2e8f0" stroke-width="1.2" opacity="1.0"/>
+<text x="898.0" y="1366" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">Positif</text>
+<text x="18" y="1230.0" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">Négatif</text>
+<circle cx="212.74" cy="1322.0" r="7" fill="#64748b" stroke="#ffffff" stroke-width="2.5"/>
+<text x="222.74" y="1312.0" font-size="11" font-weight="400" fill="#f8fafc" text-anchor="start" opacity="1.0">base</text>
+<circle cx="1145.8600000000001" cy="1235.9432" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<circle cx="1337.02" cy="1143.9432" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<text x="1347.02" y="1133.9432" font-size="11" font-weight="400" fill="#f8fafc" text-anchor="start" opacity="1.0">checkpoint-250</text>
+<circle cx="1486.06" cy="1152.8304" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<circle cx="1473.1" cy="1149.868" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<circle cx="1526.56" cy="1161.7359999999999" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<circle cx="1502.26" cy="1149.868" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<circle cx="1533.04" cy="1155.8112" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<text x="1543.04" y="1145.8112" font-size="11" font-weight="400" fill="#f8fafc" text-anchor="start" opacity="1.0">checkpoint-875</text>
+<circle cx="1490.92" cy="1152.8304" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<circle cx="1489.3" cy="1155.8112" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<circle cx="1486.06" cy="1155.8112" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+<circle cx="1486.06" cy="1155.8112" r="7" fill="#16a34a" stroke="#ffffff" stroke-width="2.5"/>
+<text x="1496.06" y="1145.8112" font-size="11" font-weight="400" fill="#f8fafc" text-anchor="start" opacity="1.0">final</text>
+<line x1="212.74" y1="1322.0" x2="1337.02" y2="1143.9432" stroke="#2563eb" stroke-width="2.5" opacity="1.0" stroke-dasharray="8 6"/>
+<line x1="1337.02" y1="1143.9432" x2="1533.04" y2="1155.8112" stroke="#f59e0b" stroke-width="2.5" opacity="1.0" stroke-dasharray="8 6"/>
+<line x1="1533.04" y1="1155.8112" x2="1486.06" y2="1155.8112" stroke="#16a34a" stroke-width="2.5" opacity="1.0" stroke-dasharray="8 6"/>
+<rect x="1180" y="1322" width="520" height="56" rx="14" fill="#111a31" stroke="#24324f" stroke-width="1.1" opacity="1.0"/>
+<text x="1200" y="1354" font-size="14" font-weight="400" fill="#e5e7eb" text-anchor="start" opacity="1.0">Lecture rapide: base faible, meilleur refus tôt, meilleure qualité positive plus tard, final = compromis.</text>
+</svg>

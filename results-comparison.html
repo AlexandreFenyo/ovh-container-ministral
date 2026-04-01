@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Résultats FAQ MES</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #10182f;
+      --panel-2: #0f1730;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --grid: #23304f;
+      --border: #26324f;
+      --good: #16a34a;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #1f2a58 0, transparent 32%),
+        radial-gradient(circle at top right, #11204f 0, transparent 28%),
+        linear-gradient(180deg, #090d1a 0, #0b1020 60%, #090d1a 100%);
+    }
+    .wrap {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      letter-spacing: -0.03em;
+    }
+    .subtitle {
+      color: var(--muted);
+      max-width: 1100px;
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .card {
+      background: rgba(16, 24, 47, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+    .card .k {
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .card .v {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .section {
+      margin-top: 18px;
+      background: rgba(16, 24, 47, 0.74);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+    }
+    .section h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+    .section p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 210px 1fr 100px;
+      gap: 14px;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .bar-label {
+      font-size: 14px;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bar-track {
+      width: 100%;
+      height: 16px;
+      border-radius: 999px;
+      background: #17223d;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+    .bar-value {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .svg-wrap {
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
+      margin-top: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    th, td {
+      padding: 11px 10px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+      text-align: right;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    th {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+    }
+    .delta.up { color: #86efac; }
+    .delta.down { color: #fca5a5; }
+    .footer {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 14px;
+    }
+    @media (max-width: 760px) {
+      .bar-row {
+        grid-template-columns: 1fr;
+      }
+      .bar-value {
+        text-align: left;
+      }
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Résultats comparatifs du fine-tuning</h1>
+    <div class="subtitle">
+      Le fichier <strong>results2.log</strong> contient la validation positive avec juge OVH.
+      Le fichier <strong>results3.log</strong> contient la validation négative en exact-match.
+      Les deux partagent les mêmes variantes: base, checkpoints intermédiaires et modèle final.
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="k">Base positive</div>
+        <div class="v">0.077</div>
+      </div>
+      <div class="card">
+        <div class="k">Base négative</div>
+        <div class="v">0.00%</div>
+      </div>
+      <div class="card">
+        <div class="k">Meilleur positif</div>
+        <div class="v">checkpoint-875 (0.892)</div>
+      </div>
+      <div class="card">
+        <div class="k">Meilleur négatif</div>
+        <div class="v">checkpoint-250 (96.77%)</div>
+      </div>
+      <div class="card">
+        <div class="k">Meilleur équilibré</div>
+        <div class="v">checkpoint-750 (0.904)</div>
+      </div>
+      <div class="card">
+        <div class="k">Final</div>
+        <div class="v">0.863 / 90.32%</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Score positif moyen</h2>
+      <p>Chaque barre représente la moyenne des scores fournis par le juge OVH sur les exemples positifs.</p>
+      
+            <div class="bar-row">
+              <div class="bar-label">base</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 7.70%; background: #6b7280;"></div>
+              </div>
+              <div class="bar-value">0.077</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-125</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 65.30%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.653</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-250</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 77.10%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.771</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-375</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 86.30%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.863</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-500</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 85.50%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.855</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-625</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 88.80%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.888</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-750</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 87.30%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.873</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-875</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 89.20%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.892</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-1000</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 86.60%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.866</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-1125</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 86.50%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.865</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-1250</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 86.30%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">0.863</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">final</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 86.30%; background: #16a34a;"></div>
+              </div>
+              <div class="bar-value">0.863</div>
+            </div>
+            
+    </div>
+
+    <div class="section">
+      <h2>Exactitude négative</h2>
+      <p>Chaque barre représente le taux de réponses refusées correctement ou, plus généralement, l'exact-match sur les exemples négatifs.</p>
+      
+            <div class="bar-row">
+              <div class="bar-label">base</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 0.00%; background: #6b7280;"></div>
+              </div>
+              <div class="bar-value">0.00%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-125</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 46.77%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">46.77%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-250</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 96.77%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">96.77%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-375</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 91.94%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">91.94%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-500</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 93.55%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">93.55%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-625</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 87.10%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">87.10%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-750</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 93.55%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">93.55%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-875</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 90.32%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">90.32%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-1000</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 91.94%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">91.94%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-1125</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 90.32%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">90.32%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">checkpoint-1250</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 90.32%; background: #2563eb;"></div>
+              </div>
+              <div class="bar-value">90.32%</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">final</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 90.32%; background: #16a34a;"></div>
+              </div>
+              <div class="bar-value">90.32%</div>
+            </div>
+            
+    </div>
+
+    <div class="section">
+      <h2>Projection 2D</h2>
+      <p>Le nuage de points compare directement la capacité à répondre positivement et à résister aux questions négatives. Le quadrant supérieur droit est le plus souhaitable.</p>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 900 560" role="img" aria-label="Scatter plot comparing positive and negative performance">
+<rect x="0" y="0" width="100%" height="100%" fill="white"/>
+<line x1="90.00" y1="30" x2="90.00" y2="480" stroke="#e5e7eb" stroke-width="1"/>
+<text x="90.00" y="512" text-anchor="middle" font-size="12" fill="#6b7280">0.00</text>
+<line x1="285.00" y1="30" x2="285.00" y2="480" stroke="#e5e7eb" stroke-width="1"/>
+<text x="285.00" y="512" text-anchor="middle" font-size="12" fill="#6b7280">0.25</text>
+<line x1="480.00" y1="30" x2="480.00" y2="480" stroke="#e5e7eb" stroke-width="1"/>
+<text x="480.00" y="512" text-anchor="middle" font-size="12" fill="#6b7280">0.50</text>
+<line x1="675.00" y1="30" x2="675.00" y2="480" stroke="#e5e7eb" stroke-width="1"/>
+<text x="675.00" y="512" text-anchor="middle" font-size="12" fill="#6b7280">0.75</text>
+<line x1="870.00" y1="30" x2="870.00" y2="480" stroke="#e5e7eb" stroke-width="1"/>
+<text x="870.00" y="512" text-anchor="middle" font-size="12" fill="#6b7280">1.00</text>
+<line x1="90" y1="480.00" x2="870" y2="480.00" stroke="#e5e7eb" stroke-width="1"/>
+<text x="78" y="484.00" text-anchor="end" font-size="12" fill="#6b7280">0%</text>
+<line x1="90" y1="367.50" x2="870" y2="367.50" stroke="#e5e7eb" stroke-width="1"/>
+<text x="78" y="371.50" text-anchor="end" font-size="12" fill="#6b7280">25%</text>
+<line x1="90" y1="255.00" x2="870" y2="255.00" stroke="#e5e7eb" stroke-width="1"/>
+<text x="78" y="259.00" text-anchor="end" font-size="12" fill="#6b7280">50%</text>
+<line x1="90" y1="142.50" x2="870" y2="142.50" stroke="#e5e7eb" stroke-width="1"/>
+<text x="78" y="146.50" text-anchor="end" font-size="12" fill="#6b7280">75%</text>
+<line x1="90" y1="30.00" x2="870" y2="30.00" stroke="#e5e7eb" stroke-width="1"/>
+<text x="78" y="34.00" text-anchor="end" font-size="12" fill="#6b7280">100%</text>
+<line x1="90" y1="480" x2="870" y2="480" stroke="#111827" stroke-width="1.5"/>
+<line x1="90" y1="30" x2="90" y2="480" stroke="#111827" stroke-width="1.5"/>
+<text x="480.00" y="540" text-anchor="middle" font-size="14" fill="#111827">Score positif moyen</text>
+<text transform="translate(22 255.00) rotate(-90)" text-anchor="middle" font-size="14" fill="#111827">Exactitude négative</text>
+<circle cx="150.06" cy="480.00" r="7" fill="#6b7280" stroke="white" stroke-width="2"/>
+<text x="160.06" y="470.00" font-size="12" fill="#111827">base</text>
+<circle cx="599.34" cy="269.53" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="609.34" y="259.53" font-size="12" fill="#111827">checkpoint-125</text>
+<circle cx="691.38" cy="44.54" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="701.38" y="34.54" font-size="12" fill="#111827">checkpoint-250</text>
+<circle cx="763.14" cy="66.27" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="773.14" y="56.27" font-size="12" fill="#111827">checkpoint-375</text>
+<circle cx="756.90" cy="59.02" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="766.90" y="49.02" font-size="12" fill="#111827">checkpoint-500</text>
+<circle cx="782.64" cy="88.05" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="792.64" y="78.05" font-size="12" fill="#111827">checkpoint-625</text>
+<circle cx="770.94" cy="59.02" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="780.94" y="49.02" font-size="12" fill="#111827">checkpoint-750</text>
+<circle cx="785.76" cy="73.56" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="795.76" y="63.56" font-size="12" fill="#111827">checkpoint-875</text>
+<circle cx="765.48" cy="66.27" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="775.48" y="56.27" font-size="12" fill="#111827">checkpoint-1000</text>
+<circle cx="764.70" cy="73.56" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="774.70" y="63.56" font-size="12" fill="#111827">checkpoint-1125</text>
+<circle cx="763.14" cy="73.56" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+<text x="773.14" y="63.56" font-size="12" fill="#111827">checkpoint-1250</text>
+<circle cx="763.14" cy="73.56" r="7" fill="#16a34a" stroke="white" stroke-width="2"/>
+<text x="773.14" y="63.56" font-size="12" fill="#111827">final</text>
+</svg>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Tableau récapitulatif</h2>
+      <p>La colonne « équilibré » est la moyenne des deux métriques normalisées, utile seulement pour comparer visuellement les versions entre elles.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Modèle</th>
+            <th>Positif</th>
+            <th>Négatif</th>
+            <th>Équilibré</th>
+            <th>Δ positif vs base</th>
+            <th>Δ négatif vs base</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="tag" style="background:#6b7280">base</span></td>
+              <td>0.077</td>
+              <td>0.00%</td>
+              <td>0.038</td>
+              <td class="delta up">+0.000</td>
+              <td class="delta up">+0.00 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-125</span></td>
+              <td>0.653</td>
+              <td>46.77%</td>
+              <td>0.560</td>
+              <td class="delta up">+0.576</td>
+              <td class="delta up">+46.77 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-250</span></td>
+              <td>0.771</td>
+              <td>96.77%</td>
+              <td>0.869</td>
+              <td class="delta up">+0.694</td>
+              <td class="delta up">+96.77 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-375</span></td>
+              <td>0.863</td>
+              <td>91.94%</td>
+              <td>0.891</td>
+              <td class="delta up">+0.786</td>
+              <td class="delta up">+91.94 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-500</span></td>
+              <td>0.855</td>
+              <td>93.55%</td>
+              <td>0.895</td>
+              <td class="delta up">+0.778</td>
+              <td class="delta up">+93.55 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-625</span></td>
+              <td>0.888</td>
+              <td>87.10%</td>
+              <td>0.879</td>
+              <td class="delta up">+0.811</td>
+              <td class="delta up">+87.10 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-750</span></td>
+              <td>0.873</td>
+              <td>93.55%</td>
+              <td>0.904</td>
+              <td class="delta up">+0.796</td>
+              <td class="delta up">+93.55 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-875</span></td>
+              <td>0.892</td>
+              <td>90.32%</td>
+              <td>0.898</td>
+              <td class="delta up">+0.815</td>
+              <td class="delta up">+90.32 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-1000</span></td>
+              <td>0.866</td>
+              <td>91.94%</td>
+              <td>0.893</td>
+              <td class="delta up">+0.789</td>
+              <td class="delta up">+91.94 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-1125</span></td>
+              <td>0.865</td>
+              <td>90.32%</td>
+              <td>0.884</td>
+              <td class="delta up">+0.788</td>
+              <td class="delta up">+90.32 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#2563eb">checkpoint-1250</span></td>
+              <td>0.863</td>
+              <td>90.32%</td>
+              <td>0.883</td>
+              <td class="delta up">+0.786</td>
+              <td class="delta up">+90.32 pts</td>
+            </tr>
+            
+            <tr>
+              <td><span class="tag" style="background:#16a34a">final</span></td>
+              <td>0.863</td>
+              <td>90.32%</td>
+              <td>0.883</td>
+              <td class="delta up">+0.786</td>
+              <td class="delta up">+90.32 pts</td>
+            </tr>
+            
+        </tbody>
+      </table>
+      <div class="footer">
+        Valeurs extraites de results2.log et results3.log.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

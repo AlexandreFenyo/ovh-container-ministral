@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Audit dataset FAQ MES</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #10182f;
+      --border: #26324f;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #f59e0b;
+      --accent2: #38bdf8;
+      --good: #16a34a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #1f2a58 0, transparent 32%),
+        radial-gradient(circle at top right, #11204f 0, transparent 28%),
+        linear-gradient(180deg, #090d1a 0, #0b1020 60%, #090d1a 100%);
+    }
+    .wrap {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      letter-spacing: -0.03em;
+    }
+    .subtitle {
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      max-width: 1180px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .card, .section {
+      background: rgba(16, 24, 47, 0.86);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+    .card {
+      padding: 16px 18px;
+    }
+    .card .k {
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .card .v {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+    .section {
+      margin-top: 18px;
+      padding: 18px;
+    }
+    .section h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+    .section p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    th, td {
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .empty {
+      color: var(--muted);
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 14px;
+    }
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      max-height: 420px;
+      overflow: auto;
+    }
+    li {
+      margin: 6px 0;
+      line-height: 1.35;
+    }
+    .note {
+      color: #fbbf24;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    .footer {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Audit du dataset fenyo/FAQ-MES-WEB</h1>
+    <div class="subtitle">
+      Analyse du split <strong>validation</strong>. L'audit cherche surtout les signes d'ambiguïté lexicale:
+      doublons exacts, quasi-doublons dans les positifs, et recouvrement entre positifs et négatifs.
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="k">Lignes</div>
+        <div class="v">289</div>
+      </div>
+      <div class="card">
+        <div class="k">Positifs</div>
+        <div class="v">227</div>
+      </div>
+      <div class="card">
+        <div class="k">Négatifs</div>
+        <div class="v">62</div>
+      </div>
+      <div class="card">
+        <div class="k">Doublons exacts</div>
+        <div class="v">0 / 0</div>
+      </div>
+      <div class="card">
+        <div class="k">Collision positive/négative</div>
+        <div class="v">0</div>
+      </div>
+      <div class="card">
+        <div class="k">Quasi-doublons positifs</div>
+        <div class="v">8</div>
+      </div>
+      <div class="card">
+        <div class="k">Collisions pos./neg.</div>
+        <div class="v">15</div>
+      </div>
+      <div class="card">
+        <div class="k">Assistant négatif</div>
+        <div class="v">1 réponse unique</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Résumé structurel</h2>
+      <p>
+        Le dataset est propre sur les collisions exactes: aucune question n'apparaît telle quelle dans les deux types,
+        et il n'y a pas de doublon exact de question après normalisation NFKC.
+        Le point de vigilance est ailleurs: les questions proches par formulation.
+      </p>
+      <div class="note">
+        Positifs uniques: 227/227.
+        Négatifs uniques: 62/62.
+        Questions exactes partagées entre types: 0.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Positifs - quasi-doublons</h2>
+      <p>Questions du même type dont la formulation est très proche (seuil ≥ 0.80). Ce sont les candidats les plus probables à une ambiguïté de dataset.</p>
+      
+    <table>
+      <thead><tr><th>Score</th><th>Question A</th><th>Question B</th><th>Lecture</th></tr></thead>
+      <tbody>
+    <tr>
+      <td>0.886</td>
+      <td>[id=14] Comment activer mon espace santé ?</td>
+      <td>[id=60] Comment accéder à Mon espace santé ?</td>
+      <td>Même thème ou très proche</td>
+    </tr>
+    
+    <tr>
+      <td>0.857</td>
+      <td>[id=22] comment se connecter à mon espace santé ?</td>
+      <td>[id=60] Comment accéder à Mon espace santé ?</td>
+      <td>Même thème ou très proche</td>
+    </tr>
+    
+    <tr>
+      <td>0.835</td>
+      <td>[id=23] comment se connecter au profil de mon enfant sur mon espace santé ?</td>
+      <td>[id=29] Comment ajouter le profil d’un enfant sur Mon espace santé ?</td>
+      <td>Même thème ou très proche</td>
+    </tr>
+    
+    <tr>
+      <td>0.827</td>
+      <td>[id=14] Comment activer mon espace santé ?</td>
+      <td>[id=22] comment se connecter à mon espace santé ?</td>
+      <td>Même thème ou très proche</td>
+    </tr>
+    
+    <tr>
+      <td>0.810</td>
+      <td>[id=50] Comment procéder pour ajouter un fichier à Mes documents de santé ?</td>
+      <td>[id=12] Comment procéder à l’ajout de mes documents de santé ?</td>
+      <td>Même thème ou très proche</td>
+    </tr>
+    
+    <tr>
+      <td>0.810</td>
+      <td>[id=4] Offres du catalogue ?</td>
+      <td>[id=102] Outils du catalogue ?</td>
+      <td>Même thème ou très proche</td>
+    </tr>
+    
+    <tr>
+      <td>0.804</td>
+      <td>[id=106] Quels sont les moyens de protection des données personnelles dans Mon espace santé ?</td>
+      <td>[id=119] Quelles garanties de protection s’appliquent à mes données personnelles dans mon espace santé ?</td>
+      <td>Même thème ou très proche</td>
+    </tr>
+    
+    <tr>
+      <td>0.800</td>
+      <td>[id=31] Profil médical ?!</td>
+      <td>[id=138] Editer profil médical ?</td>
+      <td>Même thème ou très proche</td>
+    </tr>
+    </tbody>
+    </table>
+    
+    </div>
+
+    <div class="section">
+      <h2>Positifs vs négatifs - collisions potentielles</h2>
+      <p>Ces paires ne sont pas des doublons exacts, mais elles ressemblent suffisamment pour que le modèle puisse hésiter entre réponse et refus (seuil ≥ 0.60).</p>
+      
+    <table>
+      <thead><tr><th>Score</th><th>Question positive</th><th>Question négative</th><th>Lecture</th></tr></thead>
+      <tbody>
+    <tr>
+      <td>0.810</td>
+      <td>[id=78] Consulter l’historique d’activité ?</td>
+      <td>[id=89] Peut-on désactiver l’historique d’activité ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.732</td>
+      <td>[id=43] Comment ajouter un document dans Mon espace santé ?</td>
+      <td>[id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.656</td>
+      <td>[id=120] Qui est chargé du traitement des données de Mon espace santé ?</td>
+      <td>[id=26] Stockage hors ligne des données de santé via Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.650</td>
+      <td>[id=56] Comment définir la messagerie Mon espace santé ?</td>
+      <td>[id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.644</td>
+      <td>[id=91] Comment le DMP est-il lié à Mon espace santé ?</td>
+      <td>[id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.642</td>
+      <td>[id=120] Qui est chargé du traitement des données de Mon espace santé ?</td>
+      <td>[id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.641</td>
+      <td>[id=5] Qui a accès aux données de santé stockées dans Mon espace santé ?</td>
+      <td>[id=26] Stockage hors ligne des données de santé via Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.630</td>
+      <td>[id=3] Comment les données sont‑elles intégrées dans Mon espace santé ?</td>
+      <td>[id=26] Stockage hors ligne des données de santé via Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.628</td>
+      <td>[id=119] Quelles garanties de protection s’appliquent à mes données personnelles dans mon espace santé ?</td>
+      <td>[id=17] Est-ce que les avis d&#x27;imposition peuvent être stockés dans Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.620</td>
+      <td>[id=5] Qui a accès aux données de santé stockées dans Mon espace santé ?</td>
+      <td>[id=17] Est-ce que les avis d&#x27;imposition peuvent être stockés dans Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.619</td>
+      <td>[id=22] comment se connecter à mon espace santé ?</td>
+      <td>[id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.606</td>
+      <td>[id=29] Comment ajouter le profil d’un enfant sur Mon espace santé ?</td>
+      <td>[id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.605</td>
+      <td>[id=60] Comment accéder à Mon espace santé ?</td>
+      <td>[id=14] API publique pour accéder à mes données de santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.603</td>
+      <td>[id=10] Quels sont les navigateurs supportés par Mon espace santé ?</td>
+      <td>[id=17] Est-ce que les avis d&#x27;imposition peuvent être stockés dans Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    
+    <tr>
+      <td>0.602</td>
+      <td>[id=24] Source de financement Mon espace santé ?</td>
+      <td>[id=26] Stockage hors ligne des données de santé via Mon espace santé ?</td>
+      <td>Collision sémantique possible</td>
+    </tr>
+    </tbody>
+    </table>
+    
+    </div>
+
+    <div class="section">
+      <h2>Exemples les plus sensibles</h2>
+      <div class="two-col">
+        <div class="section" style="margin-top:0;">
+          <h2>Positifs très proches</h2>
+          <p>Quelques paires proches à surveiller de près.</p>
+          <ul>
+            <li>[id=14] Comment activer mon espace santé ?<br/><span class='empty'>↔ [id=60] Comment accéder à Mon espace santé ? (0.886)</span></li><li>[id=22] comment se connecter à mon espace santé ?<br/><span class='empty'>↔ [id=60] Comment accéder à Mon espace santé ? (0.857)</span></li><li>[id=23] comment se connecter au profil de mon enfant sur mon espace santé ?<br/><span class='empty'>↔ [id=29] Comment ajouter le profil d’un enfant sur Mon espace santé ? (0.835)</span></li><li>[id=14] Comment activer mon espace santé ?<br/><span class='empty'>↔ [id=22] comment se connecter à mon espace santé ? (0.827)</span></li><li>[id=50] Comment procéder pour ajouter un fichier à Mes documents de santé ?<br/><span class='empty'>↔ [id=12] Comment procéder à l’ajout de mes documents de santé ? (0.810)</span></li><li>[id=4] Offres du catalogue ?<br/><span class='empty'>↔ [id=102] Outils du catalogue ? (0.810)</span></li><li>[id=106] Quels sont les moyens de protection des données personnelles dans Mon espace santé ?<br/><span class='empty'>↔ [id=119] Quelles garanties de protection s’appliquent à mes données personnelles dans mon espace santé ? (0.804)</span></li><li>[id=31] Profil médical ?!<br/><span class='empty'>↔ [id=138] Editer profil médical ? (0.800)</span></li>
+          </ul>
+        </div>
+        <div class="section" style="margin-top:0;">
+          <h2>Positifs / négatifs proches</h2>
+          <p>Les cas les plus risqués pour l'apprentissage du refus.</p>
+          <ul>
+            <li>[id=78] Consulter l’historique d’activité ?<br/><span class='empty'>↔ [id=89] Peut-on désactiver l’historique d’activité ? (0.810)</span></li><li>[id=43] Comment ajouter un document dans Mon espace santé ?<br/><span class='empty'>↔ [id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ? (0.732)</span></li><li>[id=120] Qui est chargé du traitement des données de Mon espace santé ?<br/><span class='empty'>↔ [id=26] Stockage hors ligne des données de santé via Mon espace santé ? (0.656)</span></li><li>[id=56] Comment définir la messagerie Mon espace santé ?<br/><span class='empty'>↔ [id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ? (0.650)</span></li><li>[id=91] Comment le DMP est-il lié à Mon espace santé ?<br/><span class='empty'>↔ [id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ? (0.644)</span></li><li>[id=120] Qui est chargé du traitement des données de Mon espace santé ?<br/><span class='empty'>↔ [id=41] Comment obtenir un remboursement des dépenses liées à Mon espace santé ? (0.642)</span></li><li>[id=5] Qui a accès aux données de santé stockées dans Mon espace santé ?<br/><span class='empty'>↔ [id=26] Stockage hors ligne des données de santé via Mon espace santé ? (0.641)</span></li><li>[id=3] Comment les données sont‑elles intégrées dans Mon espace santé ?<br/><span class='empty'>↔ [id=26] Stockage hors ligne des données de santé via Mon espace santé ? (0.630)</span></li><li>[id=119] Quelles garanties de protection s’appliquent à mes données personnelles dans mon espace santé ?<br/><span class='empty'>↔ [id=17] Est-ce que les avis d&#x27;imposition peuvent être stockés dans Mon espace santé ? (0.628)</span></li><li>[id=5] Qui a accès aux données de santé stockées dans Mon espace santé ?<br/><span class='empty'>↔ [id=17] Est-ce que les avis d&#x27;imposition peuvent être stockés dans Mon espace santé ? (0.620)</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Lecture rapide</h2>
+      <p>
+        Le dataset semble sain sur les doublons exacts, mais il est moins propre sur les formulations proches.
+        C’est cohérent avec tes observations: le modèle apprend les grandes lignes, puis se trompe surtout sur des familles de questions voisines.
+      </p>
+      <div class="note">
+        Conclusion pratique: l'audit pointe plus un problème de formulation / séparation des cas qu'un simple réglage d'hyperparamètres.
+      </div>
+    </div>
+
+    <div class="footer">
+      Fichier généré à partir du split validation de fenyo/FAQ-MES-WEB.
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recouvrement des checkpoints</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #10182f;
+      --border: #26324f;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #f59e0b;
+      --accent2: #38bdf8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #1f2a58 0, transparent 32%),
+        radial-gradient(circle at top right, #11204f 0, transparent 28%),
+        linear-gradient(180deg, #090d1a 0, #0b1020 60%, #090d1a 100%);
+    }
+    .wrap {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      letter-spacing: -0.03em;
+    }
+    .subtitle {
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      max-width: 1200px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .card, .section, .panel {
+      background: rgba(16, 24, 47, 0.86);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+    .card {
+      padding: 16px 18px;
+    }
+    .card .k {
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .card .v {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+    .section {
+      margin-top: 18px;
+      padding: 18px;
+    }
+    .section h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+    .section p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .panel {
+      padding: 14px;
+    }
+    .panel-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .panel-meta {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      max-height: 420px;
+      overflow: auto;
+    }
+    li {
+      margin: 6px 0;
+      line-height: 1.35;
+    }
+    li.empty {
+      list-style: none;
+      padding-left: 0;
+      color: var(--muted);
+    }
+    .note {
+      color: #fbbf24;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    .footer {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Recouvrement des échecs entre checkpoints</h1>
+    <div class="subtitle">
+      Comparaison de <strong>checkpoint-750</strong> contre <strong>checkpoint-625</strong> pour les positifs,
+      puis même comparaison pour les négatifs. Les positifs sont d’abord analysés en <code>score &lt; 1</code>, puis en <code>score == 0</code>.
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="k">Positifs non parfaits</div>
+        <div class="v">46 vs 65</div>
+      </div>
+      <div class="card">
+        <div class="k">Positifs à 0</div>
+        <div class="v">14 vs 17</div>
+      </div>
+      <div class="card">
+        <div class="k">Négatifs en échec</div>
+        <div class="v">4 vs 3</div>
+      </div>
+      <div class="card">
+        <div class="k">Checkpoint A</div>
+        <div class="v">checkpoint-750 / checkpoint-750</div>
+      </div>
+      <div class="card">
+        <div class="k">Checkpoint B</div>
+        <div class="v">checkpoint-625 / checkpoint-625</div>
+      </div>
+    </div>
+
+    
+    <div class="section">
+      <h2>Positifs - tous les scores non parfaits</h2>
+      <p>
+        46 éléments pour checkpoint-750 (46), 65 pour checkpoint-625 (65).
+        Intersection: 31. Jaccard: 0.388.
+      </p>
+      <div class="grid-3">
+        <div class="panel">
+          <div class="panel-title">Commun</div>
+          <div class="panel-meta">31 questions</div>
+          <ul><li>[id=74] Accès pros santé ?</li>
+<li>[id=124] Catégories de données ?</li>
+<li>[id=14] Comment activer mon espace santé ?</li>
+<li>[id=61] Comment décrire le service Mon Bilan Prévention proposé par le ministère ?</li>
+<li>[id=0] Comment mon profil Mon espace santé me sert‑il ?</li>
+<li>[id=116] Comment sécuriser les données ?</li>
+<li>[id=78] Consulter l’historique d’activité ?</li>
+<li>[id=133] De quelle façon mon dossier masque‑t‑il des documents pour certains professionnels ?</li>
+<li>[id=1] E‑mail Mon espace santé, que faire ?</li>
+<li>[id=27] Je souhaite clôturer Mon espace santé, comment faire ?</li>
+<li>[id=20] Je souhaite recevoir un nouveau code pour activer Mon espace santé mais les coordonnées e-mail qui s&#x27;affichent ne sont pas correctes, comment les modifier ?</li>
+<li>[id=17] La clôture de Mon espace santé implique‑t‑elle une impossibilité de réouverture ?</li>
+<li>[id=112] Les informations du service peuvent‑elles remplacer mon avis de professionnel ?</li>
+<li>[id=53] Les professionnels de santé peuvent-ils accéder à vos documents en cas d’urgence ?</li>
+<li>[id=35] Mon espace santé n’affiche aucun historique, que faire pour le compléter ?</li>
+<li>[id=30] Mot de passe robuste ?</li>
+<li>[id=102] Outils du catalogue ?</li>
+<li>[id=57] Professionnels autorisés ?</li>
+<li>[id=31] Profil médical ?!</li>
+<li>[id=92] Que contient la rubrique ?</li>
+<li>[id=13] Quel est le rôle du médecin assistance technique ?</li>
+<li>[id=68] Quelle est la procédure de référencement des services et applications numériques du catalogue de Mon espace santé ?</li>
+<li>[id=135] Quelles sont les modalités pour exercer mon droit d’opposition à la création de Mon espace santé ?</li>
+<li>[id=5] Qui a accès aux données de santé stockées dans Mon espace santé ?</li>
+<li>[id=115] Qui est responsable du service ?</li>
+<li>[id=80] Services synchronisés : comment faire ?</li>
+<li>[id=12] Télécharger l’app ?</li>
+<li>[id=37] directives anticipées ? comment les ajouter à mon espace santé !</li>
+<li>[id=11] le code source de Mon espace santé est public ?</li>
+<li>[id=47] qui a accès à mes documents ?</li>
+<li>[id=90] Éditeur du service ?</li></ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Seulement checkpoint-750 (46)</div>
+          <div class="panel-meta">15 questions</div>
+          <ul><li>[id=130] Accès du médecin traitant : que fait‑il ?</li>
+<li>[id=76] Comment mon espace santé masque ou rend visible mes documents aux professionnels ?</li>
+<li>[id=77] De quelle façon puis‑je consulter l’historique d’activité de mon profil Mon espace santé ?</li>
+<li>[id=93] De quelle manière les professionnels de santé accèdent-ils aux documents ?</li>
+<li>[id=21] Je désire activer Mon espace santé pour mes enfants, quelles sont les options disponibles ?</li>
+<li>[id=67] Je souhaite activer le compte de mon enfant, quelles données sont requises ?</li>
+<li>[id=104] Mon accès aux outils du catalogue est‑il gratuit ?</li>
+<li>[id=39] Mon profil doit contenir un établissement de santé, quelle est la marche à suivre ?</li>
+<li>[id=4] Offres du catalogue ?</li>
+<li>[id=129] Par quels procédés les membres de mon équipe de soins accèdent‑ils à mes données ?</li>
+<li>[id=2] Quel est le lien entre Mon espace santé et le DMP ?</li>
+<li>[id=25] Quelle disposition législative régit l’accessibilité du service Mon espace santé ?</li>
+<li>[id=17] Quels sont les mécanismes d’intégration des ordonnances numériques dans le dossier médical ?</li>
+<li>[id=128] Qui, peut‑être, accéder à mon dossier médical dans « Mon espace santé » ?</li>
+<li>[id=56] quelles sont les conditions d&#x27;acceptation des cgu par l&#x27;usager ?</li></ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Seulement checkpoint-625 (65)</div>
+          <div class="panel-meta">34 questions</div>
+          <ul><li>[id=28] 18 ans, que se passe‑t‑il ?</li>
+<li>[id=73] Accéder aide en ligne ?</li>
+<li>[id=29] Comment ajouter le profil d’un enfant sur Mon espace santé ?</li>
+<li>[id=81] Comment choisir les notifications que je souhaite recevoir !</li>
+<li>[id=82] Comment clôturer mon profil Mon espace santé !</li>
+<li>[id=55] Comment créer et utiliser des dossiers pour mes documents ?</li>
+<li>[id=56] Comment définir la messagerie Mon espace santé ?</li>
+<li>[id=3] Comment les données sont‑elles intégrées dans Mon espace santé ?</li>
+<li>[id=94] Comment masquer ?</li>
+<li>[id=79] Comment mon compte peut‑il demander le téléchargement ou la suppression de mes données ?</li>
+<li>[id=4] Comment mon profil Mon espace santé stocke‑t‑il les données et les sécurise‑t‑il ?</li>
+<li>[id=83] Comment réactiver mon profil après sa clôture ?</li>
+<li>[id=69] De quelle façon je consulte les infos d’une application dans le catalogue de services ?</li>
+<li>[id=66] De quelle façon peut‑on signaler qu’un examen a été réalisé ?</li>
+<li>[id=138] Editer profil médical ?</li>
+<li>[id=34] Est‑ce que les professionnels de santé peuvent voir mon profil médical ?</li>
+<li>[id=71] Je souhaite modifier le nom de famille ou un autre élément de mon identité qui apparaît dans Mon espace santé, comment faire ?</li>
+<li>[id=45] Le service permet‑il de télécharger les documents de mon profil ?</li>
+<li>[id=52] Les conditions pour qu’un professionnel de santé accède à vos documents sont les suivantes :</li>
+<li>[id=40] Mon interlocuteur me demande la signification de l’« accessibilité numérique ».</li>
+<li>[id=65] Par quel moyen suis‑je averti(e) de l’échéance d’un rappel ?</li>
+<li>[id=61] Quelle législation régit la gestion du profil d’un majeur protégé ?</li>
+<li>[id=114] Quelle responsabilité ont les professionnels de santé dans le cadre du service ?</li>
+<li>[id=97] Quelles données de santé peut‑on entrer dans le profil médical ?</li>
+<li>[id=137] Quelles sont les démarches pour consulter mes données personnelles ?</li>
+<li>[id=46] Quelles sont les personnes ayant accès à mes documents ?</li>
+<li>[id=131] Quelles étapes suivre pour désigner un médecin administrateur ?</li>
+<li>[id=60] Quelles étapes suivre pour enregistrer un fichier joint d’un message dans Mes documents de santé ?</li>
+<li>[id=105] Qui est responsable lors de l’usage d’un outil du catalogue ?</li>
+<li>[id=118] Qui est titulaire des droits d’auteur des contenus du site ?</li>
+<li>[id=71] Voir mon INS</li>
+<li>[id=36] ajouter/Modifier contact d’urgence, proche aidé dans Entourage ?</li>
+<li>[id=75] comment modifier mon identifiant??</li>
+<li>[id=67] À quoi sert le catalogue de services ?</li></ul>
+        </div>
+      </div>
+    </div>
+    
+
+    
+    <div class="section">
+      <h2>Positifs - uniquement les scores nuls</h2>
+      <p>
+        14 éléments pour checkpoint-750 (14), 17 pour checkpoint-625 (17).
+        Intersection: 8. Jaccard: 0.348.
+      </p>
+      <div class="grid-3">
+        <div class="panel">
+          <div class="panel-title">Commun</div>
+          <div class="panel-meta">8 questions</div>
+          <ul><li>[id=74] Accès pros santé ?</li>
+<li>[id=116] Comment sécuriser les données ?</li>
+<li>[id=1] E‑mail Mon espace santé, que faire ?</li>
+<li>[id=92] Que contient la rubrique ?</li>
+<li>[id=115] Qui est responsable du service ?</li>
+<li>[id=80] Services synchronisés : comment faire ?</li>
+<li>[id=11] le code source de Mon espace santé est public ?</li>
+<li>[id=90] Éditeur du service ?</li></ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Seulement checkpoint-750 (14)</div>
+          <div class="panel-meta">6 questions</div>
+          <ul><li>[id=76] Comment mon espace santé masque ou rend visible mes documents aux professionnels ?</li>
+<li>[id=39] Mon profil doit contenir un établissement de santé, quelle est la marche à suivre ?</li>
+<li>[id=4] Offres du catalogue ?</li>
+<li>[id=102] Outils du catalogue ?</li>
+<li>[id=129] Par quels procédés les membres de mon équipe de soins accèdent‑ils à mes données ?</li>
+<li>[id=57] Professionnels autorisés ?</li></ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Seulement checkpoint-625 (17)</div>
+          <div class="panel-meta">9 questions</div>
+          <ul><li>[id=28] 18 ans, que se passe‑t‑il ?</li>
+<li>[id=124] Catégories de données ?</li>
+<li>[id=94] Comment masquer ?</li>
+<li>[id=66] De quelle façon peut‑on signaler qu’un examen a été réalisé ?</li>
+<li>[id=20] Je souhaite recevoir un nouveau code pour activer Mon espace santé mais les coordonnées e-mail qui s&#x27;affichent ne sont pas correctes, comment les modifier ?</li>
+<li>[id=112] Les informations du service peuvent‑elles remplacer mon avis de professionnel ?</li>
+<li>[id=105] Qui est responsable lors de l’usage d’un outil du catalogue ?</li>
+<li>[id=71] Voir mon INS</li>
+<li>[id=75] comment modifier mon identifiant??</li></ul>
+        </div>
+      </div>
+    </div>
+    
+
+    
+    <div class="section">
+      <h2>Négatifs - échecs exact-match</h2>
+      <p>
+        4 éléments pour checkpoint-750 (4), 3 pour checkpoint-625 (3).
+        Intersection: 2. Jaccard: 0.400.
+      </p>
+      <div class="grid-3">
+        <div class="panel">
+          <div class="panel-title">Commun</div>
+          <div class="panel-meta">2 questions</div>
+          <ul><li>[id=3] Mon espace santé prévoit-il une médiation en cas de conflit sur mes données ?</li>
+<li>[id=12] preuve que mes données sont stockées en France.</li></ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Seulement checkpoint-750 (4)</div>
+          <div class="panel-meta">2 questions</div>
+          <ul><li>[id=2] Mon espace santé prévoit-il une médiation en cas de conflit entre moi et mon médecin traitant au sujet des données ?</li>
+<li>[id=33] Procédure alternative pour déclarer un defect logiciel (sans formulaire standard).</li></ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Seulement checkpoint-625 (3)</div>
+          <div class="panel-meta">1 questions</div>
+          <ul><li>[id=45] Question administrative: accès au code source par les développeurs ?</li></ul>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="section">
+      <h2>Lecture rapide</h2>
+      <p>
+        Le recouvrement est modéré sur les positifs non parfaits, plus net sur les scores nuls, et assez faible sur les négatifs.
+        En pratique, les deux checkpoints partagent un noyau de fragilités, mais leurs échecs spécifiques restent différents.
+      </p>
+      <div class="note">
+        Positifs non parfaits: Jaccard 0.388.
+        Positifs à 0: Jaccard 0.348.
+        Négatifs: Jaccard 0.400.
+      </div>
+    </div>
+
+    <div class="footer">
+      Basé sur checkpoint-750 / checkpoint-750 et checkpoint-625 / checkpoint-625.
+    </div>
+  </div>
+</body>
+</html>

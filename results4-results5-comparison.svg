@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1220" viewBox="0 0 1900 1220">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#08111f"/><stop offset="100%" stop-color="#0b1326"/></linearGradient></defs>
+<rect x="0" y="0" width="1900" height="1220" rx="0" fill="url(#bg)" stroke="none" stroke-width="1" opacity="1.0"/>
+<text x="56" y="56" font-size="30" font-weight="800" fill="#f8fafc" text-anchor="start" opacity="1.0">Comparaison checkpoints - résultats terminés</text>
+<text x="56" y="84" font-size="15" font-weight="400" fill="#94a3b8" text-anchor="start" opacity="1.0">results5.log (positif, gpt-oss:120b) croisé avec results4.log (négatif, exact-match)</text>
+<text x="56" y="108" font-size="13" font-weight="400" fill="#fbbf24" text-anchor="start" opacity="1.0">Seuls les checkpoints complets de results5.log sont inclus. checkpoint-750 est encore partiel et affiché à part.</text>
+<rect x="60" y="120" width="330" height="50" rx="14" fill="#0f172a" stroke="#28415d" stroke-width="1.1" opacity="0.98"/>
+<text x="74" y="141" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Base</text>
+<text x="74" y="160" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.083 | 0.00%</text>
+<rect x="410" y="120" width="390" height="50" rx="14" fill="#0f172a" stroke="#28415d" stroke-width="1.1" opacity="0.98"/>
+<text x="424" y="141" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Meilleur positif</text>
+<text x="424" y="160" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-625 | 0.832</text>
+<rect x="830" y="120" width="400" height="50" rx="14" fill="#0f172a" stroke="#28415d" stroke-width="1.1" opacity="0.98"/>
+<text x="844" y="141" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Meilleur négatif</text>
+<text x="844" y="160" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-625 | 95.16%</text>
+<rect x="1250" y="120" width="590" height="50" rx="14" fill="#0f172a" stroke="#28415d" stroke-width="1.1" opacity="0.98"/>
+<text x="1264" y="141" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Meilleur compromis</text>
+<text x="1264" y="160" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-625 | 0.892</text>
+<rect x="60" y="180" width="860" height="420" rx="22" fill="#0f172a" stroke="#273449" stroke-width="1.2" opacity="0.98"/>
+<text x="84" y="210" font-size="21" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Score positif moyen</text>
+<text x="84" y="232" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="start" opacity="1.0">results5.log, exemples positive terminés</text>
+<line x1="130" y1="530.0" x2="885" y2="530.0" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="118" y="534.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.0</text>
+<line x1="130" y1="468.0" x2="885" y2="468.0" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="118" y="472.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.2</text>
+<line x1="130" y1="406.0" x2="885" y2="406.0" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="118" y="410.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.4</text>
+<line x1="130" y1="344.0" x2="885" y2="344.0" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="118" y="348.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.6</text>
+<line x1="130" y1="282.0" x2="885" y2="282.0" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="118" y="286.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0.8</text>
+<line x1="130" y1="220.0" x2="885" y2="220.0" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="118" y="224.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">1.0</text>
+<text x="130.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">base</text>
+<circle cx="130.0" cy="504.1894273127753" r="5.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2.2"/>
+<text x="281.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-125</text>
+<circle cx="281.0" cy="406.0" r="5.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2.2"/>
+<text x="432.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-250</text>
+<circle cx="432.0" cy="340.4493392070483" r="5.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2.2"/>
+<text x="583.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-375</text>
+<circle cx="583.0" cy="292.3105726872247" r="5.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2.2"/>
+<text x="734.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-500</text>
+<circle cx="734.0" cy="283.2290748898678" r="5.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2.2"/>
+<text x="885.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-625</text>
+<circle cx="885.0" cy="272.0991189427313" r="5.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2.2"/>
+<line x1="130.0" y1="504.1894273127753" x2="281.0" y2="406.0" stroke="#f59e0b" stroke-width="4" opacity="1.0"/>
+<line x1="281.0" y1="406.0" x2="432.0" y2="340.4493392070483" stroke="#f59e0b" stroke-width="4" opacity="1.0"/>
+<line x1="432.0" y1="340.4493392070483" x2="583.0" y2="292.3105726872247" stroke="#f59e0b" stroke-width="4" opacity="1.0"/>
+<line x1="583.0" y1="292.3105726872247" x2="734.0" y2="283.2290748898678" stroke="#f59e0b" stroke-width="4" opacity="1.0"/>
+<line x1="734.0" y1="283.2290748898678" x2="885.0" y2="272.0991189427313" stroke="#f59e0b" stroke-width="4" opacity="1.0"/>
+<rect x="980" y="180" width="860" height="420" rx="22" fill="#0f172a" stroke="#273449" stroke-width="1.2" opacity="0.98"/>
+<text x="1004" y="210" font-size="21" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Exactitude négative</text>
+<text x="1004" y="232" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="start" opacity="1.0">results4.log, mêmes checkpoints</text>
+<line x1="1050" y1="530.0" x2="1805" y2="530.0" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="1038" y="534.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">0%</text>
+<line x1="1050" y1="452.5" x2="1805" y2="452.5" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="1038" y="456.5" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">25%</text>
+<line x1="1050" y1="375.0" x2="1805" y2="375.0" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="1038" y="379.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">50%</text>
+<line x1="1050" y1="297.5" x2="1805" y2="297.5" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="1038" y="301.5" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">75%</text>
+<line x1="1050" y1="220.0" x2="1805" y2="220.0" stroke="#20304b" stroke-width="1" opacity="1.0"/>
+<text x="1038" y="224.0" font-size="12" font-weight="400" fill="#94a3b8" text-anchor="end" opacity="1.0">100%</text>
+<text x="1050.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">base</text>
+<circle cx="1050.0" cy="530.0" r="5.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2.2"/>
+<text x="1201.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-125</text>
+<circle cx="1201.0" cy="470.015" r="5.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2.2"/>
+<text x="1352.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-250</text>
+<circle cx="1352.0" cy="315.01500000000004" r="5.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2.2"/>
+<text x="1503.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-375</text>
+<circle cx="1503.0" cy="254.99900000000002" r="5.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2.2"/>
+<text x="1654.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-500</text>
+<circle cx="1654.0" cy="265.012" r="5.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2.2"/>
+<text x="1805.0" y="554" font-size="10" font-weight="400" fill="#cbd5e1" text-anchor="middle" opacity="1.0">checkpoint-625</text>
+<circle cx="1805.0" cy="235.00400000000002" r="5.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2.2"/>
+<line x1="1050.0" y1="530.0" x2="1201.0" y2="470.015" stroke="#38bdf8" stroke-width="4" opacity="1.0"/>
+<line x1="1201.0" y1="470.015" x2="1352.0" y2="315.01500000000004" stroke="#38bdf8" stroke-width="4" opacity="1.0"/>
+<line x1="1352.0" y1="315.01500000000004" x2="1503.0" y2="254.99900000000002" stroke="#38bdf8" stroke-width="4" opacity="1.0"/>
+<line x1="1503.0" y1="254.99900000000002" x2="1654.0" y2="265.012" stroke="#38bdf8" stroke-width="4" opacity="1.0"/>
+<line x1="1654.0" y1="265.012" x2="1805.0" y2="235.00400000000002" stroke="#38bdf8" stroke-width="4" opacity="1.0"/>
+<rect x="90.0" y="446.1894273127753" width="220" height="54" rx="12" fill="#111827" stroke="#334155" stroke-width="1.0" opacity="0.97"/>
+<text x="102.0" y="466.1894273127753" font-size="15" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Base</text>
+<text x="102.0" y="486.1894273127753" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.083</text>
+<rect x="845.0" y="214.0991189427313" width="220" height="54" rx="12" fill="#111827" stroke="#334155" stroke-width="1.0" opacity="0.97"/>
+<text x="857.0" y="234.0991189427313" font-size="15" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Meilleur positif</text>
+<text x="857.0" y="254.0991189427313" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-625 | 0.832</text>
+<rect x="1700" y="190" width="220" height="54" rx="12" fill="#111827" stroke="#334155" stroke-width="1.0" opacity="0.97"/>
+<text x="1712" y="210" font-size="15" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Meilleur négatif</text>
+<text x="1712" y="230" font-size="11" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-625 | 95.16%</text>
+<text x="56" y="678" font-size="22" font-weight="700" fill="#e5e7eb" text-anchor="start" opacity="1.0">Tableau croisé sur les checkpoints terminés</text>
+<rect x="60" y="700" width="220" height="34" rx="10" fill="#111827" stroke="#334155" stroke-width="1.0" opacity="0.99"/>
+<text x="72" y="722" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Checkpoint</text>
+<rect x="310" y="700" width="240" height="34" rx="10" fill="#111827" stroke="#334155" stroke-width="1.0" opacity="0.99"/>
+<text x="322" y="722" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Positif moyen</text>
+<rect x="560" y="700" width="240" height="34" rx="10" fill="#111827" stroke="#334155" stroke-width="1.0" opacity="0.99"/>
+<text x="572" y="722" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Négatif exact-match</text>
+<rect x="820" y="700" width="240" height="34" rx="10" fill="#111827" stroke="#334155" stroke-width="1.0" opacity="0.99"/>
+<text x="832" y="722" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Score combiné</text>
+<rect x="1080" y="700" width="240" height="34" rx="10" fill="#111827" stroke="#334155" stroke-width="1.0" opacity="0.99"/>
+<text x="1092" y="722" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">Lecture</text>
+<rect x="60" y="734" width="1750" height="42" rx="10" fill="#0b1220" stroke="#1f2a3d" stroke-width="1.0" opacity="0.99"/>
+<text x="72" y="761" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">base</text>
+<text x="320" y="761" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.083</text>
+<text x="570" y="761" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.00%</text>
+<text x="830" y="761" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.042</text>
+<text x="1090" y="761" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">point de départ</text>
+<rect x="60" y="778" width="1750" height="42" rx="10" fill="#0f172a" stroke="#1f2a3d" stroke-width="1.0" opacity="0.99"/>
+<text x="72" y="805" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-125</text>
+<text x="320" y="805" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.400</text>
+<text x="570" y="805" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">19.35%</text>
+<text x="830" y="805" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.297</text>
+<text x="1090" y="805" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">progressif</text>
+<rect x="60" y="822" width="1750" height="42" rx="10" fill="#0b1220" stroke="#1f2a3d" stroke-width="1.0" opacity="0.99"/>
+<text x="72" y="849" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-250</text>
+<text x="320" y="849" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.611</text>
+<text x="570" y="849" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">69.35%</text>
+<text x="830" y="849" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.652</text>
+<text x="1090" y="849" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">progressif</text>
+<rect x="60" y="866" width="1750" height="42" rx="10" fill="#0f172a" stroke="#1f2a3d" stroke-width="1.0" opacity="0.99"/>
+<text x="72" y="893" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-375</text>
+<text x="320" y="893" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.767</text>
+<text x="570" y="893" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">88.71%</text>
+<text x="830" y="893" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.827</text>
+<text x="1090" y="893" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">progressif</text>
+<rect x="60" y="910" width="1750" height="42" rx="10" fill="#0b1220" stroke="#1f2a3d" stroke-width="1.0" opacity="0.99"/>
+<text x="72" y="937" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-500</text>
+<text x="320" y="937" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.796</text>
+<text x="570" y="937" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">85.48%</text>
+<text x="830" y="937" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.825</text>
+<text x="1090" y="937" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">progressif</text>
+<rect x="60" y="954" width="1750" height="42" rx="10" fill="#0f172a" stroke="#1f2a3d" stroke-width="1.0" opacity="0.99"/>
+<text x="72" y="981" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">checkpoint-625</text>
+<text x="320" y="981" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.832</text>
+<text x="570" y="981" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">95.16%</text>
+<text x="830" y="981" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">0.892</text>
+<text x="1090" y="981" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">meilleur compromis</text>
+<rect x="1320" y="700" width="490" height="82" rx="14" fill="#1f2937" stroke="#f59e0b" stroke-width="1.2" opacity="0.98"/>
+<text x="1340" y="728" font-size="16" font-weight="700" fill="#f8fafc" text-anchor="start" opacity="1.0">checkpoint-750 en cours</text>
+<text x="1340" y="750" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start" opacity="1.0">32/227 lignes, moyenne provisoire 0.784</text>
+<text x="1340" y="770" font-size="12" font-weight="400" fill="#fbbf24" text-anchor="start" opacity="1.0">Non inclus dans la comparaison principale</text>
+<text x="56" y="1170" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="start" opacity="1.0">Lecture: checkpoint-625 domine sur les deux axes parmi les checkpoints terminés, tandis que 375 est le meilleur compromis plus tôt.</text>
+</svg>
